@@ -1,6 +1,10 @@
 package com.cabe.flutter.plugin.widget_face_sdk;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
+
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -19,17 +23,23 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "widget_face_sdk");
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "FaceSDKPlugin");
     channel.setMethodCallHandler(this);
   }
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
+    if (call.method.equals("init")) {
+      String errorInfo = initSDK((Map<String, Object>) call.arguments);
+      if(TextUtils.isEmpty(errorInfo)) result.success("Android " + android.os.Build.VERSION.RELEASE);
+      else result.error("0", errorInfo, null);
     } else {
       result.notImplemented();
     }
+  }
+
+  private String initSDK(Map<String, Object> params) {
+    return null;
   }
 
   @Override
