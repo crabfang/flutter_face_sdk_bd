@@ -28,7 +28,7 @@ public class BDFaceSDK {
         livenessList.add(LivenessTypeEnum.HeadDown);
     }
     public static void init(final Context context, Map<String, Object> params, final BDFaceSDKInitCallback callback) {
-        int qualityLevel = -1;
+        int qualityLevel = 0;
         if(params.containsKey("qualityLevel")) {
             try {
                 qualityLevel = (int) params.get("qualityLevel");

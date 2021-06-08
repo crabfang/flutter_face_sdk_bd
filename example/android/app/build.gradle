@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         applicationId "com.btc.satoshi"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -53,6 +53,11 @@ android {
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+            jniDebuggable true
+        }
         release {
             signingConfig signingConfigs.debug
             debuggable true
