@@ -1,3 +1,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.cabe.flutter.plugin.widget_face_sdk">
+
+    <application>
+        <!-- 活体图像采集界面 -->
+        <activity
+            android:name="com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+
+        <!-- 人脸跟踪采集界面 -->
+        <activity
+            android:name="com.cabe.lib.face.sdk.ui.FaceDetectExpActivity"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+        <!--采集成功页面-->
+        <activity android:name="com.cabe.lib.face.sdk.ui.CollectionSuccessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_NoTitle" />
+    </application>
 </manifest>

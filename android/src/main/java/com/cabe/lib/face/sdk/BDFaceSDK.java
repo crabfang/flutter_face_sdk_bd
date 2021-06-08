@@ -1,5 +1,6 @@
 package com.cabe.lib.face.sdk;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.baidu.idl.face.platform.FaceConfig;
@@ -11,31 +12,26 @@ import com.cabe.lib.face.sdk.manager.QualityConfigManager;
 import com.cabe.lib.face.sdk.model.QualityConfig;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BDFaceSDK {
+    private static final List<LivenessTypeEnum> livenessList = new ArrayList<>();
+    static {
+        livenessList.add(LivenessTypeEnum.Eye);
+        livenessList.add(LivenessTypeEnum.Mouth);
+        livenessList.add(LivenessTypeEnum.HeadRight);
+        livenessList.add(LivenessTypeEnum.HeadLeft);
+        livenessList.add(LivenessTypeEnum.HeadUp);
+        livenessList.add(LivenessTypeEnum.HeadDown);
+    }
     public static void init(final Context context, Map<String, Object> params, final BDFaceSDKInitCallback callback) {
         int qualityLevel = -1;
         if(params.containsKey("qualityLevel")) {
             try {
                 qualityLevel = (int) params.get("qualityLevel");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        List<LivenessTypeEnum> livenessList = new ArrayList<>();
-        if(params.containsKey("livenessList")) {
-            try {
-                livenessList = (List<LivenessTypeEnum>) params.get("livenessList");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        boolean isLivenessRandom = true;
-        if(params.containsKey("isLivenessRandom")) {
-            try {
-                isLivenessRandom = (boolean) params.get("isLivenessRandom");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -48,7 +44,7 @@ public class BDFaceSDK {
                 e.printStackTrace();
             }
         }
-        boolean success = setFaceConfig(context, qualityLevel, livenessList, isLivenessRandom, isOpenSound);
+        boolean success = setFaceConfig(context, qualityLevel, isOpenSound);
         if (!success) {
             if(callback != null) callback.onResult(-1, "初始化失败 = json配置文件解析出错");
             return;
@@ -86,7 +82,7 @@ public class BDFaceSDK {
                 });
     }
 
-    private static boolean setFaceConfig(Context context, int qualityLevel, List<LivenessTypeEnum> livenessList, boolean isLivenessRandom, boolean isOpenSound) {
+    private static boolean setFaceConfig(Context context, int qualityLevel, boolean isOpenSound) {
         FaceConfig config = FaceSDKManager.getInstance().getFaceConfig();
         // 根据质量等级获取相应的质量值（注：第二个参数要与质量等级的set方法参数一致）
         QualityConfigManager manager = QualityConfigManager.getInstance();
@@ -132,7 +128,7 @@ public class BDFaceSDK {
         // LivenessTypeEunm.HeadRight
         config.setLivenessTypeList(livenessList);
         // 设置动作活体是否随机
-        config.setLivenessRandom(isLivenessRandom);
+        config.setLivenessRandom(true);
         // 设置开启提示音
         config.setSound(isOpenSound);
         // 原图缩放系数
@@ -151,5 +147,24 @@ public class BDFaceSDK {
         config.setFaceClosedRatio(FaceEnvironment.VALUE_CLOSED_RATIO);
         FaceSDKManager.getInstance().setFaceConfig(config);
         return true;
+    }
+
+    private static Map<String, Activity> destroyMap = new HashMap<>();
+    /**
+     * 添加到销毁队列
+     * @param activity 要销毁的activity
+     */
+    public static void addDestroyActivity(Activity activity, String activityName) {
+        destroyMap.put(activityName, activity);
+    }
+
+    /**
+     * 销毁指定Activity
+     */
+    public static void destroyActivity(String activityName) {
+        Set<String> keySet = destroyMap.keySet();
+        for (String key : keySet) {
+            destroyMap.get(key).finish();
+        }
     }
 }

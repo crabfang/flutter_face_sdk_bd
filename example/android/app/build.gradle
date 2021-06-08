@@ -32,19 +32,31 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.cabe.flutter.plugin.widget_face_sdk_example"
+        applicationId "com.btc.satoshi"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+    signingConfigs {
+        debug {
+            storeFile file("signature/cabe.keystore") // 需要修改成您的签名文件路径
+            keyAlias 'cabe'     // 需要修改成您的签名文件别名
+            storePassword '19871010'        // 需要修改成您的签名文件密码
+            keyPassword '19871010'          // 需要修改成您的签名文件别名密码
+        }
+        release {
+            storeFile file("signature/cabe.keystore") // 需要修改成您的签名文件路径
+            keyAlias 'cabe'     // 需要修改成您的签名文件别名
+            storePassword '19871010'        // 需要修改成您的签名文件密码
+            keyPassword '19871010'          // 需要修改成您的签名文件别名密码
+        }
+    }
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            debuggable true
+            jniDebuggable true
         }
     }
 }
