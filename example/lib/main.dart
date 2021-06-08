@@ -43,19 +43,25 @@ class _MyAppState extends State<MyApp> {
             new RaisedButton(
               child: new Text('Init'),
               onPressed: () {
-                WidgetFaceSdk.init("Satoshi-Demo-face-android", "idl-license.faceexample-face-android-1");
+                WidgetFaceSdk.init("Satoshi-Demo-face-android", "idl-license.faceexample-face-android-1").then((value) => {
+                  print("init: " + value)
+                });
               },
             ),
             new RaisedButton(
               child: new Text('人脸识别'),
               onPressed: () {
-                WidgetFaceSdk.startVerify(false);
+                WidgetFaceSdk.startVerify(false).then((value) => {
+                  print("verify: " + value)
+                });
               },
             ),
             new RaisedButton(
               child: new Text('活体检测'),
               onPressed: () {
-                WidgetFaceSdk.startVerify(true);
+                WidgetFaceSdk.startVerify(true).then((value) => {
+                  print("verify: " + value)
+                });
               },
             )
           ],
