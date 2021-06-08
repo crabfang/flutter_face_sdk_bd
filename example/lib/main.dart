@@ -47,9 +47,15 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             new RaisedButton(
-              child: new Text('Verify'),
+              child: new Text('人脸识别'),
               onPressed: () {
-                WidgetFaceSdk.startVerify();
+                WidgetFaceSdk.startVerify(false);
+              },
+            ),
+            new RaisedButton(
+              child: new Text('活体检测'),
+              onPressed: () {
+                WidgetFaceSdk.startVerify(true);
               },
             )
           ],

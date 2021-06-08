@@ -33,7 +33,7 @@ public class BDFaceSDK {
             try {
                 qualityLevel = (int) params.get("qualityLevel");
             } catch (Exception e) {
-                e.printStackTrace();
+                e.fillInStackTrace();
             }
         }
         boolean isOpenSound = true;
@@ -41,7 +41,7 @@ public class BDFaceSDK {
             try {
                 isOpenSound = (boolean) params.get("isOpenSound");
             } catch (Exception e) {
-                e.printStackTrace();
+                e.fillInStackTrace();
             }
         }
         boolean success = setFaceConfig(context, qualityLevel, isOpenSound);
@@ -55,7 +55,7 @@ public class BDFaceSDK {
             try {
                 licenseID = (String) params.get("licenseID");
             } catch (Exception e) {
-                e.printStackTrace();
+                e.fillInStackTrace();
             }
         }
         String licenseFileName = null;
@@ -63,7 +63,7 @@ public class BDFaceSDK {
             try {
                 licenseFileName = (String) params.get("licenseFileName");
             } catch (Exception e) {
-                e.printStackTrace();
+                e.fillInStackTrace();
             }
         }
         // 为了android和ios 区分授权，appId=appname_face_android ,其中appname为申请sdk时的应用名

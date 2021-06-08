@@ -18,7 +18,10 @@ class WidgetFaceSdk {
     return await _channel.invokeMethod("init", params);
   }
 
-  static Future<Object> startVerify() async {
-    return await _channel.invokeMethod("startVerify");
+  static Future<Object> startVerify(bool isAlive) async {
+    Map<String, Object> params = {
+      "isAlive": isAlive
+    };
+    return await _channel.invokeMethod("startVerify", params);
   }
 }

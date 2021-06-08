@@ -55,7 +55,16 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
                 result.success("");
             else result.error("0", errorInfo, null);
         } else if (call.method.equals("startVerify")) {
-            startVerify(true, result);
+            Map<String, Object> params = (Map<String, Object>) call.arguments;
+            Boolean isAlive = true;
+            if(params.containsKey("isAlive")) {
+                try {
+                    isAlive = (Boolean) params.get("isAlive");
+                } catch (Exception e) {
+                    e.fillInStackTrace();
+                }
+            }
+            startVerify(isAlive, result);
         } else {
             result.notImplemented();
         }
