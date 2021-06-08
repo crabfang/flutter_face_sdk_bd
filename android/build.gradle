@@ -3,8 +3,11 @@ version '1.0'
 
 buildscript {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter/' }
+        maven { url "https://jitpack.io" }
         google()
-        jcenter()
     }
 
     dependencies {
@@ -14,8 +17,11 @@ buildscript {
 
 rootProject.allprojects {
     repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter/' }
+        maven { url "https://jitpack.io" }
         google()
-        jcenter()
     }
 }
 
@@ -30,4 +36,13 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    def supportVersion = "26.1.0"
+    implementation "com.android.support:support-annotations:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+//    implementation project(path: ':faceplatform-ui')
+    implementation 'com.github.crabfang:BD_FaceSDK_UI:v1.0.1'
 }
