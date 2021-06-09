@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:widget_face_sdk/widget_face_sdk.dart';
@@ -43,7 +44,13 @@ class _MyAppState extends State<MyApp> {
             new RaisedButton(
               child: new Text('Init'),
               onPressed: () {
-                WidgetFaceSdk.init("Satoshi-Demo-face-android", "idl-license.faceexample-face-android-1").then((value) => {
+                String licenseID = "Satoshi-Demo-face-android";
+                String licenseFile = "idl-license.faceexample-face-android-1";
+                if(Platform.isIOS) {
+                  licenseID = "Satoshi-Demo-face-ios";
+                  licenseFile = "idl-license.face-ios";
+                }
+                WidgetFaceSdk.init(licenseID, licenseFile).then((value) => {
                   print("init: " + value)
                 });
               },
