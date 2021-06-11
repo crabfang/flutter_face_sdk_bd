@@ -11,6 +11,8 @@ import com.baidu.idl.face.platform.listener.IInitCallback;
 import com.cabe.lib.face.sdk.manager.QualityConfigManager;
 import com.cabe.lib.face.sdk.model.QualityConfig;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -147,6 +149,25 @@ public class BDFaceSDK {
         config.setFaceClosedRatio(FaceEnvironment.VALUE_CLOSED_RATIO);
         FaceSDKManager.getInstance().setFaceConfig(config);
         return true;
+    }
+
+    public static void changeStaticFinal(Field field, Object newValue) throws Exception {
+        field.setAccessible(true); // 如果field为private,则需要使用该方法使其可被访问
+        field.set(null, newValue); // 为指定field设置新值
+    }
+
+    public static void setRoundPaintColor(Object clazz, String fieldName, int newValue) {
+        try {
+            Field field = clazz.getClass().getDeclaredField(fieldName);
+            //设置对象的访问权限，保证对private的属性的访问
+            field.setAccessible(true);
+            Object textPaint = field.get(clazz);
+            Class textClass = textPaint.getClass();
+            Method method = textClass.getMethod("setColor", int.class);
+            method.invoke(textPaint, newValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static Map<String, Activity> destroyMap = new HashMap<>();

@@ -1,13 +1,18 @@
 package com.cabe.lib.face.sdk.ui;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
-import com.baidu.idl.face.platform.ui.utils.IntentUtils;
 import com.cabe.flutter.plugin.widget_face_sdk.WidgetFaceSdkPlugin;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.widget.TimeoutDialog;
@@ -26,8 +31,35 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 添加至销毁列表
-        BDFaceSDK.addDestroyActivity(FaceLivenessExpActivity.this,
-                "FaceLivenessExpActivity");
+        BDFaceSDK.addDestroyActivity(FaceLivenessExpActivity.this, "FaceLivenessExpActivity");
+
+        ViewParent parent = mFaceDetectRoundView.getParent();
+        if(parent instanceof RelativeLayout) {
+            final RelativeLayout container = (RelativeLayout) parent;
+
+            for(int i=0;i<container.getChildCount();i++) {
+                View child = container.getChildAt(i);
+                if(child instanceof TextView) {
+                    TextView label = ((TextView) child);
+                    label.setTextColor(Color.parseColor("#FFFF9500"));
+                    label.setBackgroundColor(Color.parseColor("#FF0000"));
+                    String str = label.getText().toString();
+                    if(str.contains("百度")) {
+                        label.setVisibility(View.GONE);
+                    }
+                } else if(child instanceof ImageView) {
+                    ImageView img = ((ImageView) child);
+                    if(img.getId() == -1) {
+                        img.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            DrawableCompat.setTint(mCloseView.getDrawable(), Color.parseColor("#FF878787"));
+            DrawableCompat.setTint(mSoundView.getDrawable(), Color.parseColor("#FF878787"));
+            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextTopPaint", Color.parseColor("#FFFF9500"));
+            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FFFFFFFF"));
+        }
     }
 
     @Override
@@ -90,11 +122,14 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
             bmpStr = list2.get(0).getValue().getBase64();
         }
 
+        WidgetFaceSdkPlugin.verifySuccess(bmpStr);
+        BDFaceSDK.destroyActivity("FaceLivenessExpActivity");
+
         // 页面跳转
-        IntentUtils.getInstance().setBitmap(bmpStr);
-        Intent intent = new Intent(FaceLivenessExpActivity.this, CollectionSuccessActivity.class);
-        intent.putExtra("destroyType", "FaceLivenessExpActivity");
-        startActivity(intent);
+//        IntentUtils.getInstance().setBitmap(bmpStr);
+//        Intent intent = new Intent(FaceLivenessExpActivity.this, CollectionSuccessActivity.class);
+//        intent.putExtra("destroyType", "FaceLivenessExpActivity");
+//        startActivity(intent);
     }
 
     private void showMessageDialog() {
@@ -124,15 +159,10 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
 
     @Override
     public void onReturn() {
+        WidgetFaceSdkPlugin.verifyCancel();
         if (mTimeoutDialog != null) {
             mTimeoutDialog.dismiss();
         }
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        WidgetFaceSdkPlugin.verifyCancel();
     }
 }

@@ -1,13 +1,18 @@
 package com.cabe.lib.face.sdk.ui;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewParent;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.ui.FaceDetectActivity;
-import com.baidu.idl.face.platform.ui.utils.IntentUtils;
 import com.cabe.flutter.plugin.widget_face_sdk.WidgetFaceSdkPlugin;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.widget.TimeoutDialog;
@@ -20,15 +25,41 @@ import java.util.List;
 import java.util.Map;
 
 public class FaceDetectExpActivity extends FaceDetectActivity implements TimeoutDialog.OnTimeoutDialogClickListener {
-
     private TimeoutDialog mTimeoutDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 添加至销毁列表
-        BDFaceSDK.addDestroyActivity(FaceDetectExpActivity.this,
-                "FaceDetectExpActivity");
+        BDFaceSDK.addDestroyActivity(FaceDetectExpActivity.this, "FaceDetectExpActivity");
+
+        ViewParent parent = mFaceDetectRoundView.getParent();
+        if(parent instanceof RelativeLayout) {
+            final RelativeLayout container = (RelativeLayout) parent;
+
+            for(int i=0;i<container.getChildCount();i++) {
+                View child = container.getChildAt(i);
+                if(child instanceof TextView) {
+                    TextView label = ((TextView) child);
+                    label.setTextColor(Color.parseColor("#FFFF9500"));
+                    label.setBackgroundColor(Color.parseColor("#FF0000"));
+                    String str = label.getText().toString();
+                    if(str.contains("百度")) {
+                        label.setVisibility(View.GONE);
+                    }
+                } else if(child instanceof ImageView) {
+                    ImageView img = ((ImageView) child);
+                    if(img.getId() == -1) {
+                        img.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            DrawableCompat.setTint(mCloseView.getDrawable(), Color.parseColor("#FF878787"));
+            DrawableCompat.setTint(mSoundView.getDrawable(), Color.parseColor("#FF878787"));
+            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextTopPaint", Color.parseColor("#FFFF9500"));
+            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FFFFFFFF"));
+        }
     }
 
     @Override
@@ -70,15 +101,6 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
                     return Float.valueOf(score2).compareTo(Float.valueOf(score1));
                 }
             });
-
-            // 获取抠图中的加密或非加密的base64
-//            int secType = mFaceConfig.getSecType();
-//            String base64;
-//            if (secType == 0) {
-//                base64 = list1.get(0).getValue().getBase64();
-//            } else {
-//                base64 = list1.get(0).getValue().getSecBase64();
-//            }
         }
 
         // 将原图集合中的图片按照质量降序排序，最终选取质量最优的一张原图图片
@@ -98,23 +120,17 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
                 }
             });
             bmpStr = list2.get(0).getValue().getBase64();
-
-            // 获取原图中的加密或非加密的base64
-//            int secType = mFaceConfig.getSecType();
-//            String base64;
-//            if (secType == 0) {
-//                base64 = list2.get(0).getValue().getBase64();
-//            } else {
-//                base64 = list2.get(0).getValue().getSecBase64();
-//            }
         }
 
+        WidgetFaceSdkPlugin.verifySuccess(bmpStr);
+        BDFaceSDK.destroyActivity("FaceDetectExpActivity");
+
         // 页面跳转
-        IntentUtils.getInstance().setBitmap(bmpStr);
-        Intent intent = new Intent(FaceDetectExpActivity.this,
-                CollectionSuccessActivity.class);
-        intent.putExtra("destroyType", "FaceDetectExpActivity");
-        startActivity(intent);
+//        IntentUtils.getInstance().setBitmap(bmpStr);
+//        Intent intent = new Intent(FaceDetectExpActivity.this,
+//                CollectionSuccessActivity.class);
+//        intent.putExtra("destroyType", "FaceDetectExpActivity");
+//        startActivity(intent);
     }
 
     private void showMessageDialog() {
@@ -144,15 +160,10 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
 
     @Override
     public void onReturn() {
+        WidgetFaceSdkPlugin.verifyCancel();
         if (mTimeoutDialog != null) {
             mTimeoutDialog.dismiss();
         }
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        WidgetFaceSdkPlugin.verifyCancel();
     }
 }

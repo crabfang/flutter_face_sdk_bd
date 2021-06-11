@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                   licenseID = "Satoshi-Demo-face-ios";
                   licenseFile = "idl-license.face-ios";
                 }
-                WidgetFaceSdk.init(licenseID, licenseFile).then((value) => {
+                WidgetFaceSdk.init(licenseID, licenseFile, qualityLevel: 2).then((value) => {
                   print("init: " + value)
                 });
               },

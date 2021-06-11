@@ -1,15 +1,18 @@
 package com.cabe.flutter.plugin.widget_face_sdk;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
+import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.BDFaceSDKInitCallback;
 import com.cabe.lib.face.sdk.ui.FaceDetectExpActivity;
 import com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -87,6 +90,22 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
 
     private void startVerify(boolean isActionLive, @NonNull Result result) {
+        try {
+            Field fieldBG = FaceDetectRoundView.class.getDeclaredField("COLOR_BG");
+            BDFaceSDK.changeStaticFinal(fieldBG, Color.parseColor("#FF101010"));
+
+            Field fieldRound = FaceDetectRoundView.class.getDeclaredField("COLOR_ROUND");
+            BDFaceSDK.changeStaticFinal(fieldRound, Color.parseColor("#FFFF9500"));
+
+            Field fieldCircleLine = FaceDetectRoundView.class.getDeclaredField("COLOR_CIRCLE_LINE");
+            BDFaceSDK.changeStaticFinal(fieldCircleLine, Color.parseColor("#FF878787"));
+
+            Field fieldCircleLineSelected = FaceDetectRoundView.class.getDeclaredField("COLOR_CIRCLE_SELECT_LINE");
+            BDFaceSDK.changeStaticFinal(fieldCircleLineSelected, Color.parseColor("#FFFF9500"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         verifyResult = result;
         if (activityBinding != null) {
             Intent intent;
