@@ -41,8 +41,6 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
                 View child = container.getChildAt(i);
                 if(child instanceof TextView) {
                     TextView label = ((TextView) child);
-                    label.setTextColor(Color.parseColor("#FFFF9500"));
-                    label.setBackgroundColor(Color.parseColor("#FF0000"));
                     String str = label.getText().toString();
                     if(str.contains("百度")) {
                         label.setVisibility(View.GONE);
@@ -58,7 +56,7 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
             DrawableCompat.setTint(mCloseView.getDrawable(), Color.parseColor("#FF878787"));
             DrawableCompat.setTint(mSoundView.getDrawable(), Color.parseColor("#FF878787"));
             BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextTopPaint", Color.parseColor("#FFFF9500"));
-            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FFFFFFFF"));
+            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FF878787"));
         }
     }
 
