@@ -1,5 +1,6 @@
 package com.cabe.flutter.plugin.widget_face_sdk;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
@@ -9,10 +10,14 @@ import androidx.annotation.NonNull;
 import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.BDFaceSDKInitCallback;
+import com.cabe.lib.face.sdk.permission.PermissionCallbacks;
+import com.cabe.lib.face.sdk.permission.PermissionTools;
 import com.cabe.lib.face.sdk.ui.FaceDetectExpActivity;
 import com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity;
+import com.cabe.lib.face.sdk.permission.PermissionHelper;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -51,7 +56,7 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
 
     @Override
-    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
         if (call.method.equals("init")) {
             String errorInfo = initSDK((Map<String, Object>) call.arguments, result);
             if (TextUtils.isEmpty(errorInfo))
@@ -67,7 +72,37 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
                     e.fillInStackTrace();
                 }
             }
-            startVerify(isAlive, result);
+            final Boolean actionAlive = isAlive;
+
+            try {
+                String[] permissionList = {
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA
+                };
+
+                PermissionTools permissionTools = new PermissionTools.Builder(activityBinding.getActivity())
+                        .setOnPermissionCallbacks(new PermissionCallbacks() {
+                            @Override
+                            public void onPermissionsGranted(int requestCode, List<String> perms) {
+                                PermissionHelper.setPermission(null);
+                                startVerify(actionAlive, result);
+                            }
+                            @Override
+                            public void onPermissionsDenied(int requestCode, List<String> perms) {
+                                PermissionHelper.setPermission(null);
+                                result.error("-1", "permission failed", null);
+                            }
+                        })
+                        .setRequestCode(111)
+                        .build();
+                permissionTools.requestPermissions(permissionList);
+                PermissionHelper.setPermission(permissionTools);
+            } catch (Exception e) {
+                e.printStackTrace();
+                startVerify(actionAlive, result);
+            }
         } else {
             result.notImplemented();
         }
