@@ -8,6 +8,6 @@ public class PermissionHelper {
         PermissionHelper.permissionTools = permissionTools;
     }
     public static void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        permissionTools.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        if(permissionTools != null) permissionTools.onRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 }
