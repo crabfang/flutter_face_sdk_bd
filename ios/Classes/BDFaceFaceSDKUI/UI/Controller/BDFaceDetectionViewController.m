@@ -9,10 +9,10 @@
 #import "BDFaceDetectionViewController.h"
 #import <IDLFaceSDK/IDLFaceSDK.h>
 #import <AVFoundation/AVFoundation.h>
-#import "BDFaceSuccessViewController.h"
+//#import "BDFaceSuccessViewController.h"
 #import "BDFaceImageShow.h"
-
-
+#import "UIColor+BDFaceColorUtils.h"
+//#import "FaceSdkPluginUtils.h"
 
 @interface BDFaceDetectionViewController ()
 {
@@ -28,7 +28,8 @@ int remindCode = -1;
     [super viewDidLoad];
     // 纯粹为了在照片成功之后，做闪屏幕动画之用
     self.animaView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.animaView.backgroundColor = [UIColor whiteColor];
+    
+    self.animaView.backgroundColor = [UIColor face_colorWithRGBHex:0x101010];
     self.animaView.alpha = 0;
     [self.view addSubview:self.animaView];
     
@@ -81,7 +82,8 @@ int remindCode = -1;
          switch (remindCode) {
             case DetectRemindCodeOK: {
                 weakSelf.hasFinished = YES;
-                [self warningStatus:CommonStatus warning:@"非常好"];
+                
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
                 if (images[@"image"] != nil && [images[@"image"] count] != 0) {
                     
                     NSArray *imageArr = images[@"image"];
@@ -108,9 +110,9 @@ int remindCode = -1;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIViewController* fatherViewController = weakSelf.presentingViewController;
                         [weakSelf dismissViewControllerAnimated:YES completion:^{
-                            BDFaceSuccessViewController *avc = [[BDFaceSuccessViewController alloc] init];
-                            avc.modalPresentationStyle = UIModalPresentationFullScreen;
-                            [fatherViewController presentViewController:avc animated:YES completion:nil];
+//                            BDFaceSuccessViewController *avc = [[BDFaceSuccessViewController alloc] init];
+//                            avc.modalPresentationStyle = UIModalPresentationFullScreen;
+//                            [fatherViewController presentViewController:avc animated:YES completion:nil];
                             [self closeAction];
                         }];                        
                     });
@@ -119,78 +121,83 @@ int remindCode = -1;
                 break;
             }
             case DetectRemindCodeDataHitOne:
-                 [self warningStatus:CommonStatus warning:@"非常好"];
+                 [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
                  break;
             case DetectRemindCodePitchOutofDownRange:
-                [self warningStatus:PoseStatus warning:@"请略微抬头"];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUp"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodePitchOutofUpRange:
-                [self warningStatus:PoseStatus warning:@"请略微低头"];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDown"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeYawOutofLeftRange:
-                [self warningStatus:PoseStatus warning:@"请略微向右转头"];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRight"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeYawOutofRightRange:
-                [self warningStatus:PoseStatus warning:@"请略微向左转头"];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeft"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodePoorIllumination:
-                [self warningStatus:CommonStatus warning:@"请使环境光线再亮些"];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLightUp"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeNoFaceDetected:
-                [self warningStatus:CommonStatus warning:@"把脸移入框内"];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeImageBlured:
-                [self warningStatus:PoseStatus warning:@"请握稳手机"];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kHoldPhone"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionLeftEye:
-                [self warningStatus:occlusionStatus warning:@"左眼有遮挡"];
+                 
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftEye"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionRightEye:
-                [self warningStatus:occlusionStatus warning:@"右眼有遮挡"];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightEye"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionNose:
-                [self warningStatus:occlusionStatus warning:@"鼻子有遮挡"];
+                 
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskNose"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionMouth:
-                [self warningStatus:occlusionStatus warning:@"嘴巴有遮挡"];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskMouth"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionLeftContour:
-                [self warningStatus:occlusionStatus warning:@"左脸颊有遮挡"];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftFace"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionRightContour:
-                [self warningStatus:occlusionStatus warning:@"右脸颊有遮挡"];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightFace"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionChinCoutour:
-                [self warningStatus:occlusionStatus warning:@"下颚有遮挡"];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskChin"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeTooClose:
-                [self warningStatus:CommonStatus warning:@"请将脸部离远一点"];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceFurther"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeTooFar:
-                [self warningStatus:CommonStatus warning:@"请将脸部靠近一点"];
+                 
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceCloser"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeBeyondPreviewFrame:
-                [self warningStatus:CommonStatus warning:@"把脸移入框内"];
+                 
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"]];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeVerifyInitError:
-                [self warningStatus:CommonStatus warning:@"验证失败"];
+                 
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kAuthFail"]];
                 break;
             case DetectRemindCodeTimeout: {
                 // 时间超时，重置之前采集数据

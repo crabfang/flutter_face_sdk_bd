@@ -23,8 +23,8 @@
       BOOL isOpenSound = [call.arguments[@"isOpenSound"] boolValue];
       BOOL remoteAuthorize = [call.arguments[@"remoteAuthorize"] boolValue];
       
-//      licenseID = FACE_LICENSE_ID;
-//      licenseFileName = [NSString stringWithFormat:@"%@.%@", FACE_LICENSE_NAME, FACE_LICENSE_SUFFIX ];
+      licenseID = FACE_LICENSE_ID;
+      licenseFileName = [NSString stringWithFormat:@"%@.%@", FACE_LICENSE_NAME, FACE_LICENSE_SUFFIX ];
       
       [[FaceSDKManager sharedInstance] setLicenseID:licenseID andLocalLicenceFile:licenseFileName andRemoteAuthorize:remoteAuthorize];
       
@@ -54,7 +54,7 @@
       
   } else if ([@"startVerify" isEqualToString:call.method]) {
       BOOL isAlive = [call.arguments[@"isAlive"] boolValue];
-      
+//      isAlive = YES;
       if (!isAlive) {//人脸
           BDFaceDetectionViewController* dvc = [[BDFaceDetectionViewController alloc] init];
           dvc.detectOKBlock = ^(NSString *imageStr) {

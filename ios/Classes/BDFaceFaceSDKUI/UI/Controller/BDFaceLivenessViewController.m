@@ -7,11 +7,12 @@
 //
 
 #import "BDFaceLivenessViewController.h"
-#import "BDFaceSuccessViewController.h"
+//#import "BDFaceSuccessViewController.h"
 #import "BDFaceLivingConfigModel.h"
 #import "BDFaceImageShow.h"
 #import <IDLFaceSDK/IDLFaceSDK.h>
 #import "BDFaceLog.h"
+#import "UIColor+BDFaceColorUtils.h"
 
 @interface BDFaceLivenessViewController ()
 {
@@ -28,11 +29,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [UIColor face_colorWithRGBHex:0xff9500];
     // 刻度线背颜色
-    self.circleProgressView.lineBgColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha:1 / 1.0];
+//    self.circleProgressView.lineBgColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha:1 / 1.0];
+    self.circleProgressView.lineBgColor = [UIColor face_colorWithRGBHex:0x878787];
     // 刻度线进度颜色
-    self.circleProgressView.scaleColor =  [UIColor colorWithRed:0 / 255.0 green:186 / 255.0 blue:242 / 255.0 alpha:1 / 1.0];
+//    self.circleProgressView.scaleColor =  [UIColor colorWithRed:0 / 255.0 green:186 / 255.0 blue:242 / 255.0 alpha:1 / 1.0];
+    self.circleProgressView.scaleColor = [UIColor face_colorWithRGBHex:0xFF9500];
     [self.view addSubview:self.circleProgressView];
     
     // 提示动画设置
@@ -111,7 +114,7 @@
         switch (remindCode) {
             case LivenessRemindCodeOK: {
                 weakSelf.hasFinished = YES;
-                [self warningStatus:CommonStatus warning:@"非常好"];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
                 if (images[@"image"] != nil && [images[@"image"] count] != 0) {
                     
                     NSArray *imageArr = images[@"image"];
@@ -133,9 +136,9 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         UIViewController* fatherViewController = weakSelf.presentingViewController;
                         [weakSelf dismissViewControllerAnimated:YES completion:^{
-                            BDFaceSuccessViewController *avc = [[BDFaceSuccessViewController alloc] init];
-                            avc.modalPresentationStyle = UIModalPresentationFullScreen;
-                            [fatherViewController presentViewController:avc animated:YES completion:nil];
+//                            BDFaceSuccessViewController *avc = [[BDFaceSuccessViewController alloc] init];
+//                            avc.modalPresentationStyle = UIModalPresentationFullScreen;
+//                            [fatherViewController presentViewController:avc animated:YES completion:nil];
                             [self closeAction];
                         }];
                     });
@@ -149,103 +152,108 @@
                 break;
             }
             case LivenessRemindCodePitchOutofDownRange:
-                [self warningStatus:PoseStatus warning:@"请略微抬头" conditionMeet:false];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUp"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodePitchOutofUpRange:
-                [self warningStatus:PoseStatus warning:@"请略微低头" conditionMeet:false];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDown"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeYawOutofRightRange:
-                [self warningStatus:PoseStatus warning:@"请略微向右转头" conditionMeet:false];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRight"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeYawOutofLeftRange:
-                [self warningStatus:PoseStatus warning:@"请略微向左转头" conditionMeet:false];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeft"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodePoorIllumination:
-                [self warningStatus:CommonStatus warning:@"请使环境光线再亮些" conditionMeet:false];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLightUp"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeNoFaceDetected:
-                [self warningStatus:CommonStatus warning:@"把脸移入框内" conditionMeet:false];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeImageBlured:
-                [self warningStatus:PoseStatus warning:@"请握稳手机" conditionMeet:false];
+                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kHoldPhone"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionLeftEye:
-                [self warningStatus:occlusionStatus warning:@"左眼有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftEye"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionRightEye:
-                [self warningStatus:occlusionStatus warning:@"右眼有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightEye"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionNose:
-                [self warningStatus:occlusionStatus warning:@"鼻子有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskNose"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionMouth:
-                [self warningStatus:occlusionStatus warning:@"嘴巴有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskMouth"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionLeftContour:
-                [self warningStatus:occlusionStatus warning:@"左脸颊有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftFace"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionRightContour:
-                [self warningStatus:occlusionStatus warning:@"右脸颊有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightFace"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionChinCoutour:
-                [self warningStatus:occlusionStatus warning:@"下颚有遮挡" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskChin"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLeftEyeClosed:
-                [self warningStatus:occlusionStatus warning:@"左眼未睁开" conditionMeet:false];
+                
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLeftEyeClose"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeRightEyeClosed:
-                [self warningStatus:occlusionStatus warning:@"右眼未睁开" conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kRightEyeClose"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeTooClose:
-                [self warningStatus:CommonStatus warning:@"请将脸部离远一点" conditionMeet:false];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceFurther"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeTooFar:
-                [self warningStatus:CommonStatus warning:@"请将脸部靠近一点" conditionMeet:false];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceCloser"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeBeyondPreviewFrame:
-                [self warningStatus:CommonStatus warning:@"把脸移入框内" conditionMeet:false];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveEye:
-                [self warningStatus:CommonStatus warning:@"眨眨眼" conditionMeet:true];
+                
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kBlinkEye"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveMouth:
-                [self warningStatus:CommonStatus warning:@"张张嘴" conditionMeet:true];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kOpenMouth"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveYawRight:
-                [self warningStatus:CommonStatus warning:@"向右缓慢转头" conditionMeet:true];
+                
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRightSlowly"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveYawLeft:
-                [self warningStatus:CommonStatus warning:@"向左缓慢转头" conditionMeet:true];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeftSlowly"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLivePitchUp:
-                [self warningStatus:CommonStatus warning:@"缓慢抬头" conditionMeet:true];
+                
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUpSlowly"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLivePitchDown:
-                [self warningStatus:CommonStatus warning:@"缓慢低头" conditionMeet:true];
+                
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDownSlowly"] conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
 //            case LivenessRemindCodeLiveYaw:
@@ -260,7 +268,7 @@
                        [self.circleProgressView setPercent:(CGFloat)(numberOfSuccess / numberOfLiveness)];
                    });
                 }];
-                [self warningStatus:CommonStatus warning:@"非常好" conditionMeet:true];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"] conditionMeet:true];
                 [self singleActionSuccess:true];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.remindAnimationView stopActionAnimating];
@@ -275,11 +283,11 @@
                        [self.circleProgressView setPercent:0];
                    });
                 }];
-                [self warningStatus:CommonStatus warning:@"把脸移入框内" conditionMeet:true];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:true];
             }
                 break;
             case LivenessRemindCodeVerifyInitError:
-                [self warningStatus:CommonStatus warning:@"验证失败"];
+                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kAuthFail"]];
                 break;
 //            case LivenessRemindCodeVerifyDecryptError:
 //                [self warningStatus:CommonStatus warning:@"验证失败"];

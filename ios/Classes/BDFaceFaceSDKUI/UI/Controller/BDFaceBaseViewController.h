@@ -11,6 +11,7 @@
 #import "BDFaceCycleProgressView.h"
 #import "BDFaceRemindAnimationView.h"
 #import "IDLFaceSDK/IDLFaceSDK.h"
+#import "FaceSdkPluginUtils.h"
 
 typedef enum : NSUInteger {
     CommonStatus,
