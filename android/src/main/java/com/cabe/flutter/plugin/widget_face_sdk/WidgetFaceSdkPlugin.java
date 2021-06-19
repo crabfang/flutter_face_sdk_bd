@@ -3,7 +3,6 @@ package com.cabe.flutter.plugin.widget_face_sdk;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -11,10 +10,10 @@ import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.BDFaceSDKInitCallback;
 import com.cabe.lib.face.sdk.permission.PermissionCallbacks;
+import com.cabe.lib.face.sdk.permission.PermissionHelper;
 import com.cabe.lib.face.sdk.permission.PermissionTools;
 import com.cabe.lib.face.sdk.ui.FaceDetectExpActivity;
 import com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity;
-import com.cabe.lib.face.sdk.permission.PermissionHelper;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -58,10 +57,7 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
         if (call.method.equals("init")) {
-            String errorInfo = initSDK((Map<String, Object>) call.arguments, result);
-            if (TextUtils.isEmpty(errorInfo))
-                result.success("");
-            else result.error("0", errorInfo, null);
+            initSDK((Map<String, Object>) call.arguments, result);
         } else if (call.method.equals("startVerify")) {
             Map<String, Object> params = (Map<String, Object>) call.arguments;
             Boolean isAlive = true;
@@ -114,12 +110,17 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
         if (activityBinding != null) {
             BDFaceSDK.init(activityBinding.getActivity(), params, new BDFaceSDKInitCallback() {
                 @Override
-                public void onResult(int code, String msg) {
-                    if (code == 0) {
-                        resultCallback.success(msg);
-                    } else {
-                        resultCallback.error("" + code, msg, null);
-                    }
+                public void onResult(final int code, final String msg) {
+                    activityBinding.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (code == 0) {
+                                resultCallback.success(0);
+                            } else {
+                                resultCallback.error("" + code, msg, null);
+                            }
+                        }
+                    });
                 }
             });
         }
