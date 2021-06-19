@@ -35,6 +35,7 @@ int remindCode = -1;
     
 }
 
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"进入新的界面");

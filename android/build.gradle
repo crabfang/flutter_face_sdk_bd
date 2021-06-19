@@ -44,6 +44,7 @@ dependencies {
     api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
     api "com.android.support:support-v4:$supportVersion"
+    api "androidx.fragment:fragment:1.0.0"
 //    implementation project(path: ':faceplatform-ui')
     api 'com.github.crabfang:BD_FaceSDK_UI:v1.0.1'
 }

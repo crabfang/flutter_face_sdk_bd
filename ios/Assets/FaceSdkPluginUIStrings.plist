@@ -67,7 +67,7 @@
 	<key>kUnknownErrCamera</key>
 	<string>出现未知错误，请检查相机设置</string>
 	<key>kBackToHomePage</key>
-	<string>回到首页</string>
+	<string>关闭采集</string>
 	<key>kFaceDetectRetry</key>
 	<string>重新采集</string>
 	<key>kFaceDetectTimeout</key>

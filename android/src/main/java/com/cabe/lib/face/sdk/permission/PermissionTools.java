@@ -225,7 +225,7 @@ public class PermissionTools {
         } catch (NoClassDefFoundError e) {
             e.printStackTrace();
         }
-        boolean isSupportFragment = object instanceof android.support.v4.app.Fragment;
+        boolean isSupportFragment = false;
         try {
             isSupportFragment = object instanceof android.support.v4.app.Fragment;
         } catch (NoClassDefFoundError e) {

@@ -127,10 +127,8 @@
                     [[BDFaceImageShow sharedInstance] setSuccessImage:bestImage.originalImage];
                     [[BDFaceImageShow sharedInstance] setSilentliveScore:bestImage.silentliveScore];
                     
-                    NSData *data = UIImageJPEGRepresentation(bestImage.originalImage, 1.0f);
-                    NSString * imageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                     if (self.detectOKBlock) {
-                        self.detectOKBlock(imageStr);
+                        self.detectOKBlock(bestImage.cropImageWithBlackEncryptStr);
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{

@@ -17,21 +17,20 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
   if ([@"init" isEqualToString:call.method]) {
+      //      result(@{@"code" : @(1)});
+      
       NSString *licenseID = call.arguments[@"licenseID"];
       NSString *licenseFileName = call.arguments[@"licenseFileName"];
       NSInteger qualityLevel = [call.arguments[@"qualityLevel"] integerValue];
       BOOL isOpenSound = [call.arguments[@"isOpenSound"] boolValue];
       BOOL remoteAuthorize = [call.arguments[@"remoteAuthorize"] boolValue];
       
-      licenseID = FACE_LICENSE_ID;
-      licenseFileName = [NSString stringWithFormat:@"%@.%@", FACE_LICENSE_NAME, FACE_LICENSE_SUFFIX ];
-      
       [[FaceSDKManager sharedInstance] setLicenseID:licenseID andLocalLicenceFile:licenseFileName andRemoteAuthorize:remoteAuthorize];
-      
+
       //init SDK
       [self initSDKWithQualityLevel:qualityLevel];
       [self initLivenesswithList];
-      
+
       if ([[FaceSDKManager sharedInstance] canWork]) {
           if (isOpenSound) {
               // 活体声音
@@ -46,7 +45,7 @@
               [IDLFaceDetectionManager sharedInstance].enableSound = NO;
 //              NSLog(@"关闭了声音");
           }
-          
+
           result(@{@"code" : @(0)});
       } else {
           result(@{@"code" : @(1)});
@@ -54,11 +53,10 @@
       
   } else if ([@"startVerify" isEqualToString:call.method]) {
       BOOL isAlive = [call.arguments[@"isAlive"] boolValue];
-//      isAlive = YES;
       if (!isAlive) {//人脸
           BDFaceDetectionViewController* dvc = [[BDFaceDetectionViewController alloc] init];
           dvc.detectOKBlock = ^(NSString *imageStr) {
-              result(@{@"image" : imageStr});
+              result(imageStr);
           };
           UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:dvc];
           navi.navigationBarHidden = true;
@@ -69,8 +67,9 @@
       } else {//活体
           BDFaceLivenessViewController* lvc = [[BDFaceLivenessViewController alloc] init];
           lvc.detectOKBlock = ^(NSString *imageStr) {
-              result(@{@"image" : imageStr});
+              result(imageStr);
           };
+
           BDFaceLivingConfigModel* model = [BDFaceLivingConfigModel sharedInstance];
           [lvc livenesswithList:model.liveActionArray order:model.isByOrder numberOfLiveness:model.numOfLiveness];
           UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:lvc];
@@ -134,9 +133,9 @@
     [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveEye)];
     [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveMouth)];
     [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveYawRight)];
-//    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveYawLeft)];
-//    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLivePitchUp)];
-//    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLivePitchDown)];
+    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveYawLeft)];
+    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLivePitchUp)];
+    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLivePitchDown)];
 //    [BDFaceLivingConfigModel.sharedInstance.liveActionArray addObject:@(FaceLivenessActionTypeLiveYaw)];
     BDFaceLivingConfigModel.sharedInstance.isByOrder = NO;
     BDFaceLivingConfigModel.sharedInstance.numOfLiveness = 3;
