@@ -18,7 +18,7 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="人脸采集超时"
+        android:text="@string/dialog_timeout_msg"
         android:textColor="#000000"
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
@@ -41,7 +41,7 @@
         android:background="@color/background"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:text="重新采集"
+        android:text="@string/dialog_timeout_btn_retry"
         android:textSize="18sp"
         android:textColor="#00BAF2"/>
 
@@ -60,7 +60,7 @@
         android:paddingBottom="15dp"
         android:layout_below="@id/view_line2"
         android:background="@color/background"
-        android:text="回到"
+        android:text="@string/dialog_timeout_btn_back"
         android:textSize="18sp"
         android:textColor="#666666"/>
 </RelativeLayout>

@@ -11,10 +11,10 @@ class WidgetFaceSdk {
     Map<String, Object> params = {
       "licenseID": licenseID,
       "licenseFileName": licenseFileName,
-      "qualityLevel": qualityLevel,
-      "isOpenSound": isOpenSound,
-      "remoteAuthorize": remoteAuthorize
     };
+    if(qualityLevel != null) params["qualityLevel"] = qualityLevel;
+    if(isOpenSound != null) params["isOpenSound"] = isOpenSound;
+    if(remoteAuthorize != null) params["remoteAuthorize"] = remoteAuthorize;
     return await _channel.invokeMethod("init", params);
   }
 
