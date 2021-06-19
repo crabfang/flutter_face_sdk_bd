@@ -219,12 +219,25 @@ public class PermissionTools {
     private void checkCallingObjectSuitability(Object object) {
         // 确保object是一个Activity或者Fragment
         boolean isActivity = object instanceof Activity;
-        boolean isSupportFragment = object instanceof Fragment;
+        boolean isXFragment = false;
+        try {
+            isXFragment = object instanceof androidx.fragment.app.Fragment;
+        } catch (NoClassDefFoundError e) {
+            e.printStackTrace();
+        }
+        boolean isSupportFragment = object instanceof android.support.v4.app.Fragment;
+        try {
+            isSupportFragment = object instanceof android.support.v4.app.Fragment;
+        } catch (NoClassDefFoundError e) {
+            e.printStackTrace();
+        }
         boolean isAppFragment = object instanceof android.app.Fragment;
         boolean isMinSdkM = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
-        if (!(isSupportFragment || isActivity || (isAppFragment && isMinSdkM))) {
-            if (isAppFragment) {
+        if (!(isXFragment || isSupportFragment || isActivity || (isAppFragment && isMinSdkM))) {
+            if (isXFragment) {
+                throw new IllegalArgumentException("need androidx support");
+            } else if (isAppFragment) {
                 throw new IllegalArgumentException("Target SDK needs to be greater than 23 if caller is android.app.Fragment");
             } else {
                 throw new IllegalArgumentException("Caller must be an Activity or a Fragment.");

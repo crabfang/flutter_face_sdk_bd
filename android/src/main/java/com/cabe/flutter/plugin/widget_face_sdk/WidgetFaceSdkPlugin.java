@@ -75,7 +75,7 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
             final Boolean actionAlive = isAlive;
 
             try {
-                String[] permissionList = {
+                final String[] permissionList = {
                         Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -87,7 +87,9 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
                             @Override
                             public void onPermissionsGranted(int requestCode, List<String> perms) {
                                 PermissionHelper.setPermission(null);
-                                startVerify(actionAlive, result);
+                                if(perms.size() == permissionList.length) {
+                                    startVerify(actionAlive, result);
+                                }
                             }
                             @Override
                             public void onPermissionsDenied(int requestCode, List<String> perms) {

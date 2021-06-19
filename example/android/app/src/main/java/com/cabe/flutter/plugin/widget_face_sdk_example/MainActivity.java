@@ -1,7 +1,6 @@
 package com.cabe.flutter.plugin.widget_face_sdk_example;
 
 import androidx.annotation.NonNull;
-
 import com.cabe.lib.face.sdk.permission.PermissionHelper;
 
 import io.flutter.embedding.android.FlutterActivity;
