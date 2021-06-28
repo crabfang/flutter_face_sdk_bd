@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
       //TODO
     });
   }
+  bool isLanguageEn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,17 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
+            new RaisedButton(
+              child: new Text('switchLanguage'),
+              onPressed: () {
+                if(isLanguageEn) {
+                  WidgetFaceSdk.switchLanguage("zh");
+                } else {
+                  WidgetFaceSdk.switchLanguage("en");
+                }
+                isLanguageEn = !isLanguageEn;
+              },
+            ),
             new RaisedButton(
               child: new Text('Init'),
               onPressed: () {

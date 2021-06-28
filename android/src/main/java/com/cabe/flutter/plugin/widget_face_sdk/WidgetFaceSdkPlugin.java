@@ -1,8 +1,13 @@
 package com.cabe.flutter.plugin.widget_face_sdk;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
+import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +22,7 @@ import com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -31,6 +37,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
  * WidgetFaceSdkPlugin
  */
 public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+    public static String curLanguage = null;
     private static Result verifyResult;
     public static void verifyCancel() {
         if(verifyResult != null) {
@@ -43,6 +50,26 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
             verifyResult.success(base64);
             verifyResult = null;
         }
+    }
+
+    public static boolean switchLanguage(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Resources res = context.getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration config = res.getConfiguration();
+            Locale locale;
+            if("en".equals(curLanguage)) {
+                locale = Locale.ENGLISH;
+            } else if("zh".equals(curLanguage)) {
+                locale = Locale.SIMPLIFIED_CHINESE;
+            } else {
+                locale = Locale.getDefault();
+            }
+            config.setLocale(locale);
+            res.updateConfiguration(config, dm);
+            return true;
+        }
+        return false;
     }
 
     private MethodChannel channel;
@@ -58,6 +85,8 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     public void onMethodCall(@NonNull MethodCall call, @NonNull final Result result) {
         if (call.method.equals("init")) {
             initSDK((Map<String, Object>) call.arguments, result);
+        } else if (call.method.equals("switchLanguage")) {
+            doLanguage((Map<String, Object>) call.arguments, result);
         } else if (call.method.equals("startVerify")) {
             Map<String, Object> params = (Map<String, Object>) call.arguments;
             Boolean isAlive = true;
@@ -154,6 +183,23 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
             }
             activityBinding.getActivity().startActivity(intent);
         }
+    }
+
+    private void doLanguage(Map<String, Object> params, Result resultCallback) {
+        String language = null;
+        if(params.containsKey("language")) {
+            try {
+                language = (String) params.get("language");
+            } catch (Exception e) {
+                e.fillInStackTrace();
+            }
+        }
+        curLanguage = language;
+        switchLanguage(activityBinding.getActivity().getApplication());
+        boolean result = switchLanguage(activityBinding.getActivity());
+        if (result) {
+            resultCallback.success("success");
+        } else resultCallback.error("-1", "系统版本过低", null);
     }
 
     @Override
