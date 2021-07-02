@@ -17,20 +17,18 @@
 
 - (NSString *)sdkplugin_pathForResource:(NSString *)name ofType:(NSString *)ext {
     NSString *tempName = name;
-    if ([ext isEqualToString:@"mp3"]) {
-        NSArray *whiteArray = @[@"blink", @"ding", @"head_down", @"head_up", @"head_yaw", @"moveFace", @"open_mouth", @"turn_left", @"turn_right"];
-        for (NSString *str in whiteArray) {
-            if ([name isEqualToString:str]) {
-                tempName = [tempName stringByAppendingString:@"_en"];
+    if (![NSBundle isChineseLanguage]) {
+        if ([ext isEqualToString:@"mp3"]) {
+            NSArray *whiteArray = @[@"blink", @"ding", @"head_down", @"head_up", @"head_yaw", @"moveFace", @"open_mouth", @"turn_left", @"turn_right"];
+            for (NSString *str in whiteArray) {
+                if ([name isEqualToString:str]) {
+                    tempName = [tempName stringByAppendingString:@"_en"];
+                }
             }
         }
-        
-//        NSLog(@"---- name %@   %@", tempName, ext);
     }
-    
-    return [self sdkplugin_pathForResource:name ofType:ext];
+    return [self sdkplugin_pathForResource:tempName ofType:ext];
 }
-
 
 + (BOOL)isChineseLanguage {
     NSString *currentLanguage = [self currentLanguage];
