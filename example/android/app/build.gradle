@@ -37,31 +37,28 @@ android {
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     signingConfigs {
-        debug {
-            storeFile file("signature/cabe.keystore") // 需要修改成您的签名文件路径
-            keyAlias 'cabe'     // 需要修改成您的签名文件别名
-            storePassword '19871010'        // 需要修改成您的签名文件密码
-            keyPassword '19871010'          // 需要修改成您的签名文件别名密码
-        }
-        release {
-            storeFile file("signature/cabe.keystore") // 需要修改成您的签名文件路径
-            keyAlias 'cabe'     // 需要修改成您的签名文件别名
-            storePassword '19871010'        // 需要修改成您的签名文件密码
-            keyPassword '19871010'          // 需要修改成您的签名文件别名密码
+        cabe {
+            storeFile file("signature/cabe.keystore")   // 需要修改成您的签名文件路径
+            keyAlias 'cabe'                             // 需要修改成您的签名文件别名
+            storePassword '19871010'                    // 需要修改成您的签名文件密码
+            keyPassword '19871010'                      // 需要修改成您的签名文件别名密码
         }
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.cabe
             debuggable true
             jniDebuggable true
         }
         release {
-            signingConfig signingConfigs.debug
-            debuggable true
-            jniDebuggable true
+            signingConfig signingConfigs.cabe
+            debuggable false
+            jniDebuggable false
         }
     }
 }

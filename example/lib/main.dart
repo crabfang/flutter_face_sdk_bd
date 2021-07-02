@@ -57,7 +57,8 @@ class _MyAppState extends State<MyApp> {
               child: new Text('Init'),
               onPressed: () {
                 String licenseID = "Satoshi-Demo-face-android";
-                String licenseFile = "idl-license.faceexample-face-android-1";
+                // String licenseFile = "idl-license.faceexample-face-android-1";
+                String licenseFile = "idl-license.face-android";
                 if(Platform.isIOS) {
                   licenseID = "Satoshi-Demo-face-ios";
                   licenseFile = "idl-license.face-ios";
