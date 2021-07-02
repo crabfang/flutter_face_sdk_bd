@@ -29,8 +29,8 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        WidgetFaceSdkPlugin.switchLanguage(this);
         super.onCreate(savedInstanceState);
+        WidgetFaceSdkPlugin.switchLanguage(this);
         // 添加至销毁列表
         BDFaceSDK.addDestroyActivity(FaceDetectExpActivity.this, "FaceDetectExpActivity");
 

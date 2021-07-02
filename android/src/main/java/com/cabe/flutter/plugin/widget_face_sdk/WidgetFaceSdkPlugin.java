@@ -53,23 +53,26 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
 
     public static boolean switchLanguage(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Resources res = context.getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration config = res.getConfiguration();
-            Locale locale;
-            if("en".equals(curLanguage)) {
-                locale = Locale.ENGLISH;
-            } else if("zh".equals(curLanguage)) {
-                locale = Locale.SIMPLIFIED_CHINESE;
-            } else {
-                locale = Locale.getDefault();
-            }
-            config.setLocale(locale);
-            res.updateConfiguration(config, dm);
-            return true;
-        }
-        return false;
+        if(curLanguage.equals("en")) BDFaceSDK.setResEn();
+        else BDFaceSDK.setResNormal();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            Resources res = context.getResources();
+//            DisplayMetrics dm = res.getDisplayMetrics();
+//            Configuration config = res.getConfiguration();
+//            Locale locale;
+//            if("en".equals(curLanguage)) {
+//                locale = Locale.ENGLISH;
+//            } else if("zh".equals(curLanguage)) {
+//                locale = Locale.SIMPLIFIED_CHINESE;
+//            } else {
+//                locale = Locale.getDefault();
+//            }
+//            config.setLocale(locale);
+//            res.updateConfiguration(config, dm);
+//            return true;
+//        }
+//        return false;
+        return true;
     }
 
     private MethodChannel channel;
@@ -195,7 +198,7 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
             }
         }
         curLanguage = language;
-        switchLanguage(activityBinding.getActivity().getApplication());
+//        switchLanguage(activityBinding.getActivity().getApplication());
         boolean result = switchLanguage(activityBinding.getActivity());
         if (result) {
             resultCallback.success("success");

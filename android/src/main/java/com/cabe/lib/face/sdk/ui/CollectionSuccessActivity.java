@@ -33,8 +33,8 @@ public class CollectionSuccessActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WidgetFaceSdkPlugin.switchLanguage(this);
         super.onCreate(savedInstanceState);
+        WidgetFaceSdkPlugin.switchLanguage(this);
         setContentView(R.layout.activity_collect_success);
         initView();
         initData();

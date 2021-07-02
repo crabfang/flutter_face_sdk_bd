@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.baidu.idl.face.platform.utils.DensityUtils;
 import com.cabe.flutter.plugin.widget_face_sdk.R;
+import com.cabe.flutter.plugin.widget_face_sdk.WidgetFaceSdkPlugin;
 
 /**
  * 超时弹窗
@@ -46,9 +48,27 @@ public class TimeoutDialog extends Dialog implements View.OnClickListener {
         lp.width = DensityUtils.dip2px(getContext(), dp);
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialogWindow.setAttributes(lp);
+
+        TextView title = (TextView) view.findViewById(R.id.text_title);
+        int resTitle = R.string.dialog_timeout_msg;
+        if("en".equals(WidgetFaceSdkPlugin.curLanguage)) {
+            resTitle = R.string.dialog_timeout_msg_en;
+        }
+        title.setText(resTitle);
+
         Button btnDialogRecollect = (Button) view.findViewById(R.id.btn_dialog_recollect);
+        int resRecollect = R.string.dialog_timeout_btn_retry;
+        if("en".equals(WidgetFaceSdkPlugin.curLanguage)) {
+            resRecollect = R.string.dialog_timeout_btn_retry_en;
+        }
+        btnDialogRecollect.setText(resRecollect);
         btnDialogRecollect.setOnClickListener(this);
         Button btnDialogReturn = (Button) view.findViewById(R.id.btn_dialog_return);
+        int resReturn = R.string.dialog_timeout_btn_back;
+        if("en".equals(WidgetFaceSdkPlugin.curLanguage)) {
+            resReturn = R.string.dialog_timeout_btn_back_en;
+        }
+        btnDialogReturn.setText(resReturn);
         btnDialogReturn.setOnClickListener(this);
     }
 
@@ -72,7 +92,6 @@ public class TimeoutDialog extends Dialog implements View.OnClickListener {
 
     public interface OnTimeoutDialogClickListener {
         void onRecollect();
-
         void onReturn();
     }
 }
