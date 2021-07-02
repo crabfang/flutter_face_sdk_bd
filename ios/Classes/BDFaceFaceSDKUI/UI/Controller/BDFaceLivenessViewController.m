@@ -114,7 +114,7 @@
         switch (remindCode) {
             case LivenessRemindCodeOK: {
                 weakSelf.hasFinished = YES;
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kVeryGood", nil)];
                 if (images[@"image"] != nil && [images[@"image"] count] != 0) {
                     
                     NSArray *imageArr = images[@"image"];
@@ -150,108 +150,108 @@
                 break;
             }
             case LivenessRemindCodePitchOutofDownRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUp"] conditionMeet:false];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookUp", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodePitchOutofUpRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDown"] conditionMeet:false];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookDown", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeYawOutofRightRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRight"] conditionMeet:false];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookRight", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeYawOutofLeftRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeft"] conditionMeet:false];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookLeft", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodePoorIllumination:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLightUp"] conditionMeet:false];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLightUp", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeNoFaceDetected:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:false];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kMoveFaceInto", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeImageBlured:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kHoldPhone"] conditionMeet:false];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kHoldPhone", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionLeftEye:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftEye"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskLeftEye", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionRightEye:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightEye"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskRightEye", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionNose:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskNose"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskNose", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionMouth:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskMouth"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskMouth", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionLeftContour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftFace"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskLeftFace", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionRightContour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightFace"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskRightFace", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeOcclusionChinCoutour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskChin"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskChin", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLeftEyeClosed:
                 
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLeftEyeClose"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kLeftEyeClose", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeRightEyeClosed:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kRightEyeClose"] conditionMeet:false];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kRightEyeClose", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeTooClose:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceFurther"] conditionMeet:false];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kFaceFurther", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeTooFar:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceCloser"] conditionMeet:false];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kFaceCloser", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeBeyondPreviewFrame:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:false];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kMoveFaceInto", nil) conditionMeet:false];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveEye:
                 
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kBlinkEye"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kBlinkEye", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveMouth:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kOpenMouth"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kOpenMouth", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveYawRight:
                 
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRightSlowly"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLookRightSlowly", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLiveYawLeft:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeftSlowly"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLookLeftSlowly", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLivePitchUp:
                 
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUpSlowly"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLookUpSlowly", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
             case LivenessRemindCodeLivePitchDown:
                 
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDownSlowly"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLookDownSlowly", nil) conditionMeet:true];
                 [self singleActionSuccess:false];
                 break;
 //            case LivenessRemindCodeLiveYaw:
@@ -266,7 +266,7 @@
                        [self.circleProgressView setPercent:(CGFloat)(numberOfSuccess / numberOfLiveness)];
                    });
                 }];
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kVeryGood", nil) conditionMeet:true];
                 [self singleActionSuccess:true];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.remindAnimationView stopActionAnimating];
@@ -281,11 +281,11 @@
                        [self.circleProgressView setPercent:0];
                    });
                 }];
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"] conditionMeet:true];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kMoveFaceInto", nil) conditionMeet:true];
             }
                 break;
             case LivenessRemindCodeVerifyInitError:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kAuthFail"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kAuthFail", nil)];
                 break;
 //            case LivenessRemindCodeVerifyDecryptError:
 //                [self warningStatus:CommonStatus warning:@"验证失败"];

@@ -5,8 +5,41 @@
 #import "BDFaceLivenessViewController.h"
 #import "BDFaceLivingConfigModel.h"
 #import "BDFaceAdjustParamsTool.h"
+#import <objc/runtime.h>
+#import "NSBundle+Plugin.h"
+#import "PluginConfig.h"
 
 @implementation WidgetFaceSdkPlugin
+
++ (void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        Class class = [[NSBundle mainBundle] class];
+        
+        SEL originalSelector = @selector(pathForResource:ofType:);
+        SEL swizzledSelector = @selector(sdkplugin_pathForResource:ofType:);
+        
+        Method originalMethod = class_getInstanceMethod(class, originalSelector);
+        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+        
+        BOOL didAddMethod =
+        class_addMethod(class,
+                        originalSelector,
+                        method_getImplementation(swizzledMethod),
+                        method_getTypeEncoding(swizzledMethod));
+        
+        if (didAddMethod) {
+            class_replaceMethod(class,
+                                swizzledSelector,
+                                method_getImplementation(originalMethod),
+                                method_getTypeEncoding(originalMethod));
+        } else {
+            method_exchangeImplementations(originalMethod, swizzledMethod);
+        }
+    });
+}
+
+
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"FaceSDKPlugin"
@@ -78,6 +111,16 @@
           UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
           [window.rootViewController presentViewController:navi animated:YES completion:nil];
       }
+  } else if ([@"switchLanguage" isEqualToString:call.method]) {
+      NSString *language = call.arguments[@"language"];
+      if ([language isEqualToString:@"zh"]) {
+          [PluginConfig setUserLanguage:@"zh-Hans"];
+      } else if ([language isEqualToString:@"en"]) {
+          [PluginConfig setUserLanguage:@"en"];
+      } else {
+          [PluginConfig setUserLanguage:nil];
+      }
+      result(@{@"code" : @(0)});
   }
 }
 

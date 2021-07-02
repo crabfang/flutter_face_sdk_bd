@@ -88,13 +88,14 @@
             [weakSelf.remindView setHidden:false];
             [weakSelf.remindDetailLabel setHidden:false];
             weakSelf.remindDetailLabel.text = warning;
-            weakSelf.remindLabel.text = [FaceSdkPluginUtils pluginStringWithKey:@"kKeepPositiveFace"];
+            weakSelf.remindLabel.text = NSLocalizedString(@"kKeepPositiveFace", nil);
+            
         }else if (status == occlusionStatus) {
             [weakSelf.remindLabel setHidden:false];
             [weakSelf.remindView setHidden:true];
             [weakSelf.remindDetailLabel setHidden:false];
             weakSelf.remindDetailLabel.text = warning;
-            weakSelf.remindLabel.text = [FaceSdkPluginUtils pluginStringWithKey:@"kMaskFace"];
+            weakSelf.remindLabel.text = NSLocalizedString(@"kMaskFace", nil);
         }else {
             [weakSelf.remindLabel setHidden:false];
             [weakSelf.remindView setHidden:true];
@@ -146,7 +147,7 @@
     // 超时的label
     _timeOutLabel = [[UILabel alloc] init];
     _timeOutLabel.frame = CGRectMake(KScaleX(40), KScaleY(309.3), ScreenWidth-KScaleX(80), 22);
-    _timeOutLabel.text = [FaceSdkPluginUtils pluginStringWithKey:@"kFaceDetectTimeout"];
+    _timeOutLabel.text = NSLocalizedString(@"kFaceDetectTimeout", nil);
     _timeOutLabel.textAlignment = NSTextAlignmentCenter;
     _timeOutLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:18];
     _timeOutLabel.textColor = [UIColor colorWithRed:0 / 255.0 green:0 / 255.0 blue:0 / 255.0 alpha:1 / 1.0];
@@ -164,7 +165,7 @@
     // 重新采集的文字label
     _timeOutRestartLabel = [[UILabel alloc] init];
     _timeOutRestartLabel.frame = CGRectMake((ScreenWidth-72) / 2, KScaleY(376.3), 72, 18);
-    _timeOutRestartLabel.text = [FaceSdkPluginUtils pluginStringWithKey:@"kFaceDetectRetry"];
+    _timeOutRestartLabel.text = NSLocalizedString(@"kFaceDetectRetry", nil);
     _timeOutRestartLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:18];
     _timeOutRestartLabel.textColor = [UIColor colorWithRed:0 / 255.0 green:186 / 255.0 blue:242 / 255.0 alpha:1 / 1.0];
     
@@ -181,7 +182,7 @@
     // 回到首页的label
     _timeOutBackToMainLabel2 = [[UILabel alloc] init];
     _timeOutBackToMainLabel2.frame = CGRectMake((ScreenWidth-72) / 2, KScaleY(424.3), 72, 18);
-    _timeOutBackToMainLabel2.text = [FaceSdkPluginUtils pluginStringWithKey:@"kBackToHomePage"];
+    _timeOutBackToMainLabel2.text = NSLocalizedString(@"kBackToHomePage", nil);
     _timeOutBackToMainLabel2.font = [UIFont fontWithName:@"PingFangSC-Medium" size:18];
     _timeOutBackToMainLabel2.textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha:1 / 1.0];
     
@@ -467,15 +468,15 @@
 }
 
 - (void)captureError {
-    NSString *errorStr = [FaceSdkPluginUtils pluginStringWithKey:@"kUnknownErrCamera"];
+    NSString *errorStr = NSLocalizedString(@"kUnknownErrCamera", nil);
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
-        errorStr = [FaceSdkPluginUtils pluginStringWithKey:@"kCameraAuth"];
+        errorStr = NSLocalizedString(@"kCameraAuth", nil);
     }
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:errorStr preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:[FaceSdkPluginUtils pluginStringWithKey:@"kKnowMsg"] style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"kKnowMsg", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             NSLog(@"知道啦");
         }];
         [alert addAction:action];

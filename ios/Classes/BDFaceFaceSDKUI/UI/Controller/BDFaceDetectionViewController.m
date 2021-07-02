@@ -12,7 +12,6 @@
 //#import "BDFaceSuccessViewController.h"
 #import "BDFaceImageShow.h"
 #import "UIColor+BDFaceColorUtils.h"
-//#import "FaceSdkPluginUtils.h"
 
 @interface BDFaceDetectionViewController ()
 {
@@ -34,7 +33,6 @@ int remindCode = -1;
     [self.view addSubview:self.animaView];
     
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -84,7 +82,7 @@ int remindCode = -1;
             case DetectRemindCodeOK: {
                 weakSelf.hasFinished = YES;
                 
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kVeryGood", nil)];
                 if (images[@"image"] != nil && [images[@"image"] count] != 0) {
                     
                     NSArray *imageArr = images[@"image"];
@@ -122,83 +120,83 @@ int remindCode = -1;
                 break;
             }
             case DetectRemindCodeDataHitOne:
-                 [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kVeryGood"]];
+                 [self warningStatus:CommonStatus warning:NSLocalizedString(@"kVeryGood", nil)];
                  break;
             case DetectRemindCodePitchOutofDownRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookUp"]];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookUp", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodePitchOutofUpRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookDown"]];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookDown", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeYawOutofLeftRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookRight"]];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookRight", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeYawOutofRightRange:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLookLeft"]];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kLookLeft", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodePoorIllumination:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kLightUp"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kLightUp", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeNoFaceDetected:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kMoveFaceInto", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeImageBlured:
-                [self warningStatus:PoseStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kHoldPhone"]];
+                [self warningStatus:PoseStatus warning:NSLocalizedString(@"kHoldPhone", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionLeftEye:
                  
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftEye"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskLeftEye", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionRightEye:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightEye"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskRightEye", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionNose:
                  
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskNose"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskNose", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionMouth:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskMouth"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskMouth", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionLeftContour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskLeftFace"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskLeftFace", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionRightContour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskRightFace"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskRightFace", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeOcclusionChinCoutour:
-                [self warningStatus:occlusionStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMaskChin"]];
+                [self warningStatus:occlusionStatus warning:NSLocalizedString(@"kMaskChin", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeTooClose:
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceFurther"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kFaceFurther", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeTooFar:
                  
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kFaceCloser"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kFaceCloser", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeBeyondPreviewFrame:
                  
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kMoveFaceInto"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kMoveFaceInto", nil)];
                 [self singleActionSuccess:false];
                 break;
             case DetectRemindCodeVerifyInitError:
                  
-                [self warningStatus:CommonStatus warning:[FaceSdkPluginUtils pluginStringWithKey:@"kAuthFail"]];
+                [self warningStatus:CommonStatus warning:NSLocalizedString(@"kAuthFail", nil)];
                 break;
             case DetectRemindCodeTimeout: {
                 // 时间超时，重置之前采集数据
