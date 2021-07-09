@@ -364,7 +364,7 @@ public class BDFaceSDK {
                 R.string.liveness_head_right_en);
         FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionComplete,
                 R.string.liveness_good_en);
-        FaceEnvironment.setTipsId(FaceStatusNewEnum.OK, R.string.liveness_good);
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.OK, R.string.liveness_good_en);
 
         FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTimeout,
                 R.string.detect_timeout_en);
