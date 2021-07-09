@@ -1,14 +1,7 @@
 package com.cabe.lib.face.sdk.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewParent;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
@@ -33,31 +26,13 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
         WidgetFaceSdkPlugin.switchLanguage(this);
         // 添加至销毁列表
         BDFaceSDK.addDestroyActivity(FaceDetectExpActivity.this, "FaceDetectExpActivity");
+    }
 
-        ViewParent parent = mFaceDetectRoundView.getParent();
-        if(parent instanceof RelativeLayout) {
-            final RelativeLayout container = (RelativeLayout) parent;
-
-            for(int i=0;i<container.getChildCount();i++) {
-                View child = container.getChildAt(i);
-                if(child instanceof TextView) {
-                    TextView label = ((TextView) child);
-                    String str = label.getText().toString();
-                    if(str.contains("百度")) {
-                        label.setVisibility(View.GONE);
-                    }
-                } else if(child instanceof ImageView) {
-                    ImageView img = ((ImageView) child);
-                    if(img.getId() == -1) {
-                        img.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            DrawableCompat.setTint(mCloseView.getDrawable(), Color.parseColor("#FF878787"));
-            DrawableCompat.setTint(mSoundView.getDrawable(), Color.parseColor("#FF878787"));
-            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextTopPaint", Color.parseColor("#FFFF9500"));
-            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FF878787"));
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mFaceDetectRoundView != null) {
+            mFaceDetectRoundView.setTipTopText(getResources().getString(BDFaceSDK.RES_TIPS_DEFAULT));
         }
     }
 

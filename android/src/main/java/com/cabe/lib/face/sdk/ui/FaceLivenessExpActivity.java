@@ -1,14 +1,7 @@
 package com.cabe.lib.face.sdk.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewParent;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
@@ -33,31 +26,13 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
         WidgetFaceSdkPlugin.switchLanguage(this);
         // 添加至销毁列表
         BDFaceSDK.addDestroyActivity(FaceLivenessExpActivity.this, "FaceLivenessExpActivity");
+    }
 
-        ViewParent parent = mFaceDetectRoundView.getParent();
-        if(parent instanceof RelativeLayout) {
-            final RelativeLayout container = (RelativeLayout) parent;
-
-            for(int i=0;i<container.getChildCount();i++) {
-                View child = container.getChildAt(i);
-                if(child instanceof TextView) {
-                    TextView label = ((TextView) child);
-                    String str = label.getText().toString();
-                    if(str.contains("百度")) {
-                        label.setVisibility(View.GONE);
-                    }
-                } else if(child instanceof ImageView) {
-                    ImageView img = ((ImageView) child);
-                    if(img.getId() == -1) {
-                        img.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            DrawableCompat.setTint(mCloseView.getDrawable(), Color.parseColor("#FF878787"));
-            DrawableCompat.setTint(mSoundView.getDrawable(), Color.parseColor("#FF878787"));
-            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextTopPaint", Color.parseColor("#FFFF9500"));
-            BDFaceSDK.setRoundPaintColor(mFaceDetectRoundView, "mTextSecondPaint", Color.parseColor("#FF878787"));
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mFaceDetectRoundView != null) {
+            mFaceDetectRoundView.setTipTopText(getResources().getString(BDFaceSDK.RES_TIPS_DEFAULT));
         }
     }
 
@@ -66,6 +41,7 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
                                      HashMap<String, ImageInfo> base64ImageCropMap,
                                      HashMap<String, ImageInfo> base64ImageSrcMap, int currentLivenessCount) {
         super.onLivenessCompletion(status, message, base64ImageCropMap, base64ImageSrcMap, currentLivenessCount);
+        updateResultSpecial(status);
         if (status == FaceStatusNewEnum.OK && mIsCompletion) {
             // 获取最优图片
             getBestImage(base64ImageCropMap, base64ImageSrcMap);
@@ -74,6 +50,32 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
                 mViewBg.setVisibility(View.VISIBLE);
             }
             showMessageDialog();
+        }
+    }
+    
+    private void updateResultSpecial(FaceStatusNewEnum status) {
+        if (status == FaceStatusNewEnum.DetectRemindCodeYawOutofRightRange) {
+            mFaceDetectRoundView.setTipTopText(getResources().getString(BDFaceSDK.RES_TIPS_FACE_AHEAD));
+        }
+        switch (status) {
+            case OK:
+            case FaceLivenessActionComplete:
+            case DetectRemindCodeTooClose:
+            case DetectRemindCodeTooFar:
+            case DetectRemindCodeBeyondPreviewFrame:
+            case DetectRemindCodeNoFaceDetected:
+            case FaceLivenessActionTypeLiveEye:
+            case FaceLivenessActionTypeLiveMouth:
+            case FaceLivenessActionTypeLivePitchUp:
+            case FaceLivenessActionTypeLivePitchDown:
+            case FaceLivenessActionTypeLiveYawLeft:
+            case FaceLivenessActionTypeLiveYawRight:
+            case FaceLivenessActionTypeLiveYaw:
+            case FaceLivenessActionCodeTimeout:
+                break;
+            default:
+                mFaceDetectRoundView.setTipTopText(getResources().getString(BDFaceSDK.RES_TIPS_FACE_AHEAD));
+                break;
         }
     }
 

@@ -22,6 +22,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class BDFaceSDK {
+    public static int RES_TIPS_DEFAULT = R.string.detect_face_in;
+    public static int RES_TIPS_FACE_AHEAD = R.string.detect_face_with_ahead;
+    public static int RES_TIPS_DIALOG_TIMEOUT_TITLE = R.string.dialog_timeout_msg;
+    public static int RES_TIPS_DIALOG_TIMEOUT_RETRY = R.string.dialog_timeout_btn_retry;
+    public static int RES_TIPS_DIALOG_TIMEOUT_CANCEL = R.string.dialog_timeout_btn_back;
     private static final List<LivenessTypeEnum> livenessList = new ArrayList<>();
     static {
         livenessList.add(LivenessTypeEnum.Eye);
@@ -273,6 +278,12 @@ public class BDFaceSDK {
 
         FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTimeout,
                 R.string.detect_timeout);
+
+        RES_TIPS_DEFAULT = R.string.detect_face_in;
+        RES_TIPS_FACE_AHEAD = R.string.detect_face_with_ahead;
+        RES_TIPS_DIALOG_TIMEOUT_TITLE = R.string.dialog_timeout_msg;
+        RES_TIPS_DIALOG_TIMEOUT_RETRY = R.string.dialog_timeout_btn_retry;
+        RES_TIPS_DIALOG_TIMEOUT_CANCEL = R.string.dialog_timeout_btn_back;
     }
 
     public static void setResEn() {
@@ -357,5 +368,11 @@ public class BDFaceSDK {
 
         FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTimeout,
                 R.string.detect_timeout_en);
+        
+        RES_TIPS_DEFAULT = R.string.detect_face_in_en;
+        RES_TIPS_FACE_AHEAD = R.string.detect_face_with_ahead_en;
+        RES_TIPS_DIALOG_TIMEOUT_TITLE = R.string.dialog_timeout_msg_en;
+        RES_TIPS_DIALOG_TIMEOUT_RETRY = R.string.dialog_timeout_btn_retry_en;
+        RES_TIPS_DIALOG_TIMEOUT_CANCEL = R.string.dialog_timeout_btn_back_en;
     }
 }

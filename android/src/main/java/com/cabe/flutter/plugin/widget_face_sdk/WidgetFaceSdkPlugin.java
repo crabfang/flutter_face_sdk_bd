@@ -3,15 +3,9 @@ package com.cabe.flutter.plugin.widget_face_sdk;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Build;
-import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
 
-import com.baidu.idl.face.platform.ui.widget.FaceDetectRoundView;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.BDFaceSDKInitCallback;
 import com.cabe.lib.face.sdk.permission.PermissionCallbacks;
@@ -19,10 +13,9 @@ import com.cabe.lib.face.sdk.permission.PermissionHelper;
 import com.cabe.lib.face.sdk.permission.PermissionTools;
 import com.cabe.lib.face.sdk.ui.FaceDetectExpActivity;
 import com.cabe.lib.face.sdk.ui.FaceLivenessExpActivity;
+import com.cabe.lib.face.sdk.widget.FaceDetectRoundViewPro;
 
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -160,21 +153,7 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
 
     private void startVerify(boolean isActionLive, @NonNull Result result) {
-        try {
-            Field fieldBG = FaceDetectRoundView.class.getDeclaredField("COLOR_BG");
-            BDFaceSDK.changeStaticFinal(fieldBG, Color.parseColor("#FF101010"));
-
-            Field fieldRound = FaceDetectRoundView.class.getDeclaredField("COLOR_ROUND");
-            BDFaceSDK.changeStaticFinal(fieldRound, Color.parseColor("#FFFF9500"));
-
-            Field fieldCircleLine = FaceDetectRoundView.class.getDeclaredField("COLOR_CIRCLE_LINE");
-            BDFaceSDK.changeStaticFinal(fieldCircleLine, Color.parseColor("#FF878787"));
-
-            Field fieldCircleLineSelected = FaceDetectRoundView.class.getDeclaredField("COLOR_CIRCLE_SELECT_LINE");
-            BDFaceSDK.changeStaticFinal(fieldCircleLineSelected, Color.parseColor("#FFFF9500"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FaceDetectRoundViewPro.setViewStyle();
 
         verifyResult = result;
         if (activityBinding != null) {
