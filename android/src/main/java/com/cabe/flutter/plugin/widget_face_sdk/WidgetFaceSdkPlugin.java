@@ -30,7 +30,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
  * WidgetFaceSdkPlugin
  */
 public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
-    public static String curLanguage = null;
+    public static String curLanguage = "cn";
     private static Result verifyResult;
     public static void verifyCancel() {
         if(verifyResult != null) {

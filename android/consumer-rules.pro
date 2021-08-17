@@ -23,3 +23,5 @@
 -keep class com.baidu.liantian.** {*;}
 -keep class com.baidu.baidusec.** {*;}
 -keep class com.baidu.idl.main.facesdk.** {*;}
+-keep class com.baidu.idl.face.platform.ui.widget.* {*;}
+-keep class com.cabe.lib.face.sdk.widget.* {*;}
