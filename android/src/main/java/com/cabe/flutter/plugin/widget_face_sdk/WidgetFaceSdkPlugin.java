@@ -46,8 +46,9 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
     }
 
     public static boolean switchLanguage(Context context) {
-        if(curLanguage.equals("en")) BDFaceSDK.setResEn();
-        else BDFaceSDK.setResNormal();
+        BDFaceSDK.setRes(context, curLanguage);
+//        if(curLanguage.equals("en")) BDFaceSDK.setResEn();
+//        else BDFaceSDK.setResNormal();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //            Resources res = context.getResources();
 //            DisplayMetrics dm = res.getDisplayMetrics();

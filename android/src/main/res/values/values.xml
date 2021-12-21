@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="detect_face_with_ahead_en">Please keep face</string>
-    <string name="detect_face_in_en">detect face in</string>
-    <string name="detect_head_down_en">liveness_head_down</string>
-    <string name="detect_head_left_en">liveness_head_left</string>
-    <string name="detect_head_right_en">liveness_head_right</string>
-    <string name="detect_head_up_en">liveness_head_up</string>
-    <string name="detect_keep_en">Please hold the phone steady and look directly at the screen</string>
-    <string name="detect_left_eye_close_en">Left eye is not opened</string>
-    <string name="detect_low_light_en">Please make the ambient light brighter</string>
-    <string name="detect_no_face_en">No face detected</string>
-    <string name="detect_occ_chin_en">Chin obstructed</string>
-    <string name="detect_occ_face_en">The face is blocked</string>
-    <string name="detect_occ_left_check_en">The left cheek is blocked</string>
-    <string name="detect_occ_left_eye_en">The left eye is blocked</string>
-    <string name="detect_occ_mouth_en">Covered mouth</string>
-    <string name="detect_occ_nose_en">The nose is blocked</string>
-    <string name="detect_occ_right_check_en">Right cheek is blocked</string>
-    <string name="detect_occ_right_eye_en">Right eye is blocked</string>
-    <string name="detect_right_eye_close_en">Right eye is not opened</string>
-    <string name="detect_standard_en">Please face the phone</string>
-    <string name="detect_timeout_en">Detection timed out, please follow the prompts and try again</string>
-    <string name="detect_zoom_in_en">Please bring your face closer</string>
-    <string name="detect_zoom_out_en">Please keep your face away</string>
-    <string name="liveness_eye_en">Wink</string>
-    <string name="liveness_good_en">that is good</string>
-    <string name="liveness_head_down_en">Head down slowly</string>
-    <string name="liveness_head_left_en">Turn your head slowly to the left</string>
-    <string name="liveness_head_right_en">Turn your head slowly to the right</string>
-    <string name="liveness_head_up_en">Raise your head slowly</string>
-    <string name="liveness_mouth_en">Open your mouth</string>
-    <string name="dialog_timeout_msg_en">Face collection timed out</string>
-    <string name="dialog_timeout_btn_retry_en">Re-acquisition</string>
-    <string name="dialog_timeout_btn_back_en">Cancel collection</string>
-
     <string name="detect_face_with_ahead">请保持正脸</string>
     <string name="detect_face_in">把脸移入框内</string>
     <string name="detect_head_down">请略微低头</string>
