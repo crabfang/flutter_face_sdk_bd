@@ -2,7 +2,6 @@ package com.cabe.lib.face.sdk;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceEnvironment;
@@ -10,7 +9,6 @@ import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.listener.IInitCallback;
-import com.baidu.idl.face.platform.utils.DensityUtils;
 import com.cabe.flutter.plugin.widget_face_sdk.R;
 import com.cabe.lib.face.sdk.manager.QualityConfigManager;
 import com.cabe.lib.face.sdk.model.QualityConfig;
@@ -208,57 +206,58 @@ public class BDFaceSDK {
     }
 
     public static void setRes(Context context, String language) {
-        if(language != null) language = language.replace("-", "_").toLowerCase(Locale.getDefault());
+        if(language != null) language = "_" + language.replace("-", "_").toLowerCase(Locale.getDefault());
+        else language = "";
         // Sound Res Id
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,
-                getResId(context, "detect_face_in_" + language, "raw", R.raw.detect_face_in)
+                getResId(context, "detect_face_in" + language, "raw", R.raw.detect_face_in)
         );
         FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,
-                getResId(context, "detect_face_in_" + language, "raw", R.raw.detect_face_in)
+                FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame,
+                getResId(context, "detect_face_in" + language, "raw", R.raw.detect_face_in)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLiveEye,
-                getResId(context, "liveness_eye_" + language, "raw", R.raw.liveness_eye)
+                getResId(context, "liveness_eye" + language, "raw", R.raw.liveness_eye)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLiveMouth,
-                getResId(context, "liveness_mouth_" + language, "raw", R.raw.liveness_mouth)
+                getResId(context, "liveness_mouth" + language, "raw", R.raw.liveness_mouth)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLivePitchUp,
-                getResId(context, "liveness_head_up_" + language, "raw", R.raw.liveness_head_up)
+                getResId(context, "liveness_head_up" + language, "raw", R.raw.liveness_head_up)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLivePitchDown,
-                getResId(context, "liveness_head_down_" + language, "raw", R.raw.liveness_head_down)
+                getResId(context, "liveness_head_down" + language, "raw", R.raw.liveness_head_down)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLiveYawLeft,
-                getResId(context, "liveness_head_left_" + language, "raw", R.raw.liveness_head_left)
+                getResId(context, "liveness_head_left" + language, "raw", R.raw.liveness_head_left)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionTypeLiveYawRight,
-                getResId(context, "liveness_head_right_" + language, "raw", R.raw.liveness_head_right)
+                getResId(context, "liveness_head_right" + language, "raw", R.raw.liveness_head_right)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.FaceLivenessActionComplete,
-                getResId(context, "face_good_" + language, "raw", R.raw.face_good)
+                getResId(context, "face_good" + language, "raw", R.raw.face_good)
         );
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.OK,
-                getResId(context, "face_good_" + language, "raw", R.raw.face_good)
+                getResId(context, "face_good" + language, "raw", R.raw.face_good)
         );
 
         // Tips Res Id
         FaceEnvironment.setTipsId(
                 FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,
-                getResId(context, "detect_face_in_" + language, "string", R.string.detect_face_in)
+                getResId(context, "detect_face_in" + language, "string", R.string.detect_face_in)
         );
         FaceEnvironment.setTipsId(
                 FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame,
-                getResId(context, "detect_face_in_" + language, "string", R.string.detect_face_in)
+                getResId(context, "detect_face_in" + language, "string", R.string.detect_face_in)
         );
         FaceEnvironment.setTipsId(
                 FaceStatusNewEnum.DetectRemindCodePoorIllumination,
@@ -373,7 +372,7 @@ public class BDFaceSDK {
         RES_TIPS_DIALOG_TIMEOUT_RETRY = getResId(context, "dialog_timeout_btn_retry" + language, "string", R.string.dialog_timeout_btn_retry);
         RES_TIPS_DIALOG_TIMEOUT_CANCEL = getResId(context, "dialog_timeout_btn_back" + language, "string", R.string.dialog_timeout_btn_back);
     }
-    
+
 //    public static void setResNormal() {
 //        // Sound Res Id
 //        FaceEnvironment.setSoundId(FaceStatusNewEnum.DetectRemindCodeNoFaceDetected, R.raw.detect_face_in);
