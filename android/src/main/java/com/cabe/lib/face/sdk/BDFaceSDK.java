@@ -10,6 +10,7 @@ import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.listener.IInitCallback;
+import com.baidu.idl.face.platform.utils.DensityUtils;
 import com.cabe.flutter.plugin.widget_face_sdk.R;
 import com.cabe.lib.face.sdk.manager.QualityConfigManager;
 import com.cabe.lib.face.sdk.model.QualityConfig;
@@ -19,6 +20,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +30,8 @@ public class BDFaceSDK {
     public static int RES_TIPS_DIALOG_TIMEOUT_TITLE = R.string.dialog_timeout_msg;
     public static int RES_TIPS_DIALOG_TIMEOUT_RETRY = R.string.dialog_timeout_btn_retry;
     public static int RES_TIPS_DIALOG_TIMEOUT_CANCEL = R.string.dialog_timeout_btn_back;
+    public static int RES_FACE_TIP_SIZE_TOP = 22;
+    public static int RES_FACE_TIP_SIZE_SECOND = 16;
     private static final List<LivenessTypeEnum> livenessList = new ArrayList<>();
     static {
         livenessList.add(LivenessTypeEnum.Eye);
@@ -204,6 +208,7 @@ public class BDFaceSDK {
     }
 
     public static void setRes(Context context, String language) {
+        if(language != null) language = language.replace("-", "_").toLowerCase(Locale.getDefault());
         // Sound Res Id
         FaceEnvironment.setSoundId(
                 FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,

@@ -25,9 +25,11 @@ class WidgetFaceSdk {
     return await _channel.invokeMethod("startVerify", params);
   }
 
-  static Future<Object> switchLanguage(String language) async {
+  static Future<Object> switchLanguage(String language, { Key key, int tipSizeTop, int tipSizeSecond }) async {
     Map<String, Object> params = {
-      "language": language
+      "language": language,
+      "faceTipSizeTop": tipSizeTop,
+      "faceTipSizeSecond": tipSizeSecond
     };
     return await _channel.invokeMethod("switchLanguage", params);
   }

@@ -6,8 +6,11 @@ import android.view.View;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.ui.FaceDetectActivity;
+import com.baidu.idl.face.platform.utils.DensityUtils;
+import com.cabe.flutter.plugin.widget_face_sdk.R;
 import com.cabe.flutter.plugin.widget_face_sdk.WidgetFaceSdkPlugin;
 import com.cabe.lib.face.sdk.BDFaceSDK;
+import com.cabe.lib.face.sdk.widget.FaceDetectRoundViewPro;
 import com.cabe.lib.face.sdk.widget.TimeoutDialog;
 
 import java.util.ArrayList;
@@ -26,6 +29,8 @@ public class FaceDetectExpActivity extends FaceDetectActivity implements Timeout
         WidgetFaceSdkPlugin.switchLanguage(this);
         // 添加至销毁列表
         BDFaceSDK.addDestroyActivity(FaceDetectExpActivity.this, "FaceDetectExpActivity");
+        ((FaceDetectRoundViewPro)findViewById(R.id.detect_face_round)).getTopPaint().setTextSize(DensityUtils.dip2px(this, BDFaceSDK.RES_FACE_TIP_SIZE_TOP));
+        ((FaceDetectRoundViewPro)findViewById(R.id.detect_face_round)).getSecondPaint().setTextSize(DensityUtils.dip2px(this, BDFaceSDK.RES_FACE_TIP_SIZE_SECOND));
     }
 
     @Override

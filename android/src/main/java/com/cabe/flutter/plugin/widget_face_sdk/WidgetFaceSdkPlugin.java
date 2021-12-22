@@ -177,6 +177,20 @@ public class WidgetFaceSdkPlugin implements FlutterPlugin, MethodCallHandler, Ac
                 e.fillInStackTrace();
             }
         }
+        if(params.containsKey("faceTipSizeTop")) {
+            try {
+                BDFaceSDK.RES_FACE_TIP_SIZE_TOP = (int) params.get("faceTipSizeTop");
+            } catch (Exception e) {
+                e.fillInStackTrace();
+            }
+        }
+        if(params.containsKey("faceTipSizeSecond")) {
+            try {
+                BDFaceSDK.RES_FACE_TIP_SIZE_SECOND = (int) params.get("faceTipSizeSecond");
+            } catch (Exception e) {
+                e.fillInStackTrace();
+            }
+        }
         curLanguage = language;
 //        switchLanguage(activityBinding.getActivity().getApplication());
         boolean result = switchLanguage(activityBinding.getActivity());

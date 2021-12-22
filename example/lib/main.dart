@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
                 if(isLanguageEn) {
                   WidgetFaceSdk.switchLanguage("zh");
                 } else {
-                  WidgetFaceSdk.switchLanguage("en");
+                  WidgetFaceSdk.switchLanguage("en", tipSizeTop: 10, tipSizeSecond: 6);
                 }
                 isLanguageEn = !isLanguageEn;
               },

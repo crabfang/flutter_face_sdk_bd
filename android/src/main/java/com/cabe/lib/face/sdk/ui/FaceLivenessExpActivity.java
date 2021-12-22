@@ -6,9 +6,12 @@ import android.view.View;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.ui.FaceLivenessActivity;
+import com.baidu.idl.face.platform.utils.DensityUtils;
+import com.cabe.flutter.plugin.widget_face_sdk.R;
 import com.cabe.flutter.plugin.widget_face_sdk.WidgetFaceSdkPlugin;
 import com.cabe.lib.face.sdk.BDFaceSDK;
 import com.cabe.lib.face.sdk.widget.TimeoutDialog;
+import com.cabe.lib.face.sdk.widget.FaceDetectRoundViewPro;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +29,8 @@ public class FaceLivenessExpActivity extends FaceLivenessActivity implements Tim
         WidgetFaceSdkPlugin.switchLanguage(this);
         // 添加至销毁列表
         BDFaceSDK.addDestroyActivity(FaceLivenessExpActivity.this, "FaceLivenessExpActivity");
+        ((FaceDetectRoundViewPro)findViewById(R.id.liveness_face_round)).getTopPaint().setTextSize(DensityUtils.dip2px(this, BDFaceSDK.RES_FACE_TIP_SIZE_TOP));
+        ((FaceDetectRoundViewPro)findViewById(R.id.liveness_face_round)).getSecondPaint().setTextSize(DensityUtils.dip2px(this, BDFaceSDK.RES_FACE_TIP_SIZE_SECOND));
     }
 
     @Override

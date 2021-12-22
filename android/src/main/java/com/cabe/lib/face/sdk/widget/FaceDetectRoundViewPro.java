@@ -37,6 +37,14 @@ public class FaceDetectRoundViewPro extends FaceDetectRoundView {
         getFieldPaint("mTextSecondPaint").setColor(Color.parseColor("#FF878787"));
     }
 
+    public Paint getTopPaint() {
+        return getFieldPaint("mTextTopPaint");
+    }
+
+    public Paint getSecondPaint() {
+        return getFieldPaint("mTextSecondPaint");
+    }
+
     private Object invokeSuperMethod(String methodName, Object...params) {
         Object result = null;
         try {
