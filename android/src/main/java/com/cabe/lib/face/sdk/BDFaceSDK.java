@@ -199,178 +199,63 @@ public class BDFaceSDK {
         }
     }
 
-    private static int getResId(Context context, String idName, String defType, int defaultId) {
-        int resId = context.getResources().getIdentifier(idName, defType, context.getPackageName());
-        if(resId == 0) resId = defaultId;
-        return resId;
+    private static int getResId(Context context, int resId, String language) {
+        if(language != null) language = "_" + language.replace("-", "_").toLowerCase(Locale.getDefault());
+        else language = "";
+        String resName = context.getResources().getResourceName(resId);
+        int newId = context.getResources().getIdentifier(resName + language, null, null);
+        if(newId == 0) newId = resId;
+        return newId;
     }
 
     public static void setRes(Context context, String language) {
-        if(language != null) language = "_" + language.replace("-", "_").toLowerCase(Locale.getDefault());
-        else language = "";
         // Sound Res Id
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,
-                getResId(context, "detect_face_in" + language, "raw", R.raw.detect_face_in)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame,
-                getResId(context, "detect_face_in" + language, "raw", R.raw.detect_face_in)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveEye,
-                getResId(context, "liveness_eye" + language, "raw", R.raw.liveness_eye)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveMouth,
-                getResId(context, "liveness_mouth" + language, "raw", R.raw.liveness_mouth)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLivePitchUp,
-                getResId(context, "liveness_head_up" + language, "raw", R.raw.liveness_head_up)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLivePitchDown,
-                getResId(context, "liveness_head_down" + language, "raw", R.raw.liveness_head_down)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveYawLeft,
-                getResId(context, "liveness_head_left" + language, "raw", R.raw.liveness_head_left)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveYawRight,
-                getResId(context, "liveness_head_right" + language, "raw", R.raw.liveness_head_right)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.FaceLivenessActionComplete,
-                getResId(context, "face_good" + language, "raw", R.raw.face_good)
-        );
-        FaceEnvironment.setSoundId(
-                FaceStatusNewEnum.OK,
-                getResId(context, "face_good" + language, "raw", R.raw.face_good)
-        );
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.DetectRemindCodeNoFaceDetected, getResId(context, R.raw.detect_face_in, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame, getResId(context, R.raw.detect_face_in, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLiveEye, getResId(context, R.raw.liveness_eye, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLiveMouth, getResId(context, R.raw.liveness_mouth, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLivePitchUp, getResId(context, R.raw.liveness_head_up, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLivePitchDown, getResId(context, R.raw.liveness_head_down, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLiveYawLeft, getResId(context, R.raw.liveness_head_left, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionTypeLiveYawRight, getResId(context, R.raw.liveness_head_right, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.FaceLivenessActionComplete, getResId(context, R.raw.face_good, language));
+        FaceEnvironment.setSoundId(FaceStatusNewEnum.OK, getResId(context, R.raw.face_good, language));
 
         // Tips Res Id
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeNoFaceDetected,
-                getResId(context, "detect_face_in" + language, "string", R.string.detect_face_in)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame,
-                getResId(context, "detect_face_in" + language, "string", R.string.detect_face_in)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodePoorIllumination,
-                getResId(context, "detect_low_light" + language, "string", R.string.detect_low_light)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeImageBlured,
-                getResId(context, "detect_keep" + language, "string", R.string.detect_keep)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionLeftEye,
-                getResId(context, "detect_occ_left_eye" + language, "string", R.string.detect_occ_left_eye)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionRightEye,
-                getResId(context, "detect_occ_right_eye" + language, "string", R.string.detect_occ_right_eye)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionNose,
-                getResId(context, "detect_occ_nose" + language, "string", R.string.detect_occ_nose)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionMouth,
-                getResId(context, "detect_occ_mouth" + language, "string", R.string.detect_occ_mouth)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionLeftContour,
-                getResId(context, "detect_occ_left_check" + language, "string", R.string.detect_occ_left_check)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionRightContour,
-                getResId(context, "detect_occ_right_check" + language, "string", R.string.detect_occ_right_check)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeOcclusionChinContour,
-                getResId(context, "detect_occ_chin" + language, "string", R.string.detect_occ_chin)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodePitchOutofUpRange,
-                getResId(context, "detect_head_down" + language, "string", R.string.detect_head_down)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodePitchOutofDownRange,
-                getResId(context, "detect_head_up" + language, "string", R.string.detect_head_up)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeYawOutofLeftRange,
-                getResId(context, "detect_head_right" + language, "string", R.string.detect_head_right)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeYawOutofRightRange,
-                getResId(context, "detect_head_left" + language, "string", R.string.detect_head_left)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeTooFar,
-                getResId(context, "detect_zoom_in" + language, "string", R.string.detect_zoom_in)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeTooClose,
-                getResId(context, "detect_zoom_out" + language, "string", R.string.detect_zoom_out)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeLeftEyeClosed,
-                getResId(context, "detect_left_eye_close" + language, "string", R.string.detect_left_eye_close)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeRightEyeClosed,
-                getResId(context, "detect_right_eye_close" + language, "string", R.string.detect_right_eye_close)
-        );
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeNoFaceDetected, getResId(context, R.string.detect_face_in, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeBeyondPreviewFrame, getResId(context, R.string.detect_face_in, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodePoorIllumination, getResId(context, R.string.detect_low_light, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeImageBlured, getResId(context, R.string.detect_keep, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionLeftEye, getResId(context, R.string.detect_occ_left_eye, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionRightEye, getResId(context, R.string.detect_occ_right_eye, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionNose, getResId(context, R.string.detect_occ_nose, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionMouth, getResId(context, R.string.detect_occ_mouth, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionLeftContour, getResId(context, R.string.detect_occ_left_check, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionRightContour, getResId(context, R.string.detect_occ_right_check, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeOcclusionChinContour, getResId(context, R.string.detect_occ_chin, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodePitchOutofUpRange, getResId(context, R.string.detect_head_down, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodePitchOutofDownRange, getResId(context, R.string.detect_head_up, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeYawOutofLeftRange, getResId(context, R.string.detect_head_right, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeYawOutofRightRange, getResId(context, R.string.detect_head_left, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTooFar, getResId(context, R.string.detect_zoom_in, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTooClose, getResId(context, R.string.detect_zoom_out, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeLeftEyeClosed, getResId(context, R.string.detect_left_eye_close, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeRightEyeClosed, getResId(context, R.string.detect_right_eye_close, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLiveEye, getResId(context, R.string.liveness_eye, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLiveMouth, getResId(context, R.string.liveness_mouth, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLivePitchUp, getResId(context, R.string.liveness_head_up, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLivePitchDown, getResId(context, R.string.liveness_head_down, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLiveYawLeft, getResId(context, R.string.liveness_head_left, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionTypeLiveYawRight, getResId(context, R.string.liveness_head_right, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.FaceLivenessActionComplete, getResId(context, R.string.liveness_good, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.OK, getResId(context, R.string.liveness_good, language));
+        FaceEnvironment.setTipsId(FaceStatusNewEnum.DetectRemindCodeTimeout, getResId(context, R.string.detect_timeout, language));
 
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveEye,
-                getResId(context, "liveness_eye" + language, "string", R.string.liveness_eye)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveMouth,
-                getResId(context, "liveness_mouth" + language, "string", R.string.liveness_mouth)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLivePitchUp,
-                getResId(context, "liveness_head_up" + language, "string", R.string.liveness_head_up)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLivePitchDown,
-                getResId(context, "liveness_head_down" + language, "string", R.string.liveness_head_down)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveYawLeft,
-                getResId(context, "liveness_head_left" + language, "string", R.string.liveness_head_left)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionTypeLiveYawRight,
-                getResId(context, "liveness_head_right" + language, "string", R.string.liveness_head_right)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.FaceLivenessActionComplete,
-                getResId(context, "liveness_good" + language, "string", R.string.liveness_good)
-        );
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.OK,
-                getResId(context, "liveness_good" + language, "string", R.string.liveness_good)
-        );
-
-        FaceEnvironment.setTipsId(
-                FaceStatusNewEnum.DetectRemindCodeTimeout,
-                getResId(context, "detect_timeout" + language, "string", R.string.detect_timeout)
-        );
-
-        RES_TIPS_DEFAULT = getResId(context, "detect_face_in" + language, "string", R.string.detect_face_in);
-        RES_TIPS_FACE_AHEAD = getResId(context, "detect_face_with_ahead" + language, "string", R.string.detect_face_with_ahead);
-        RES_TIPS_DIALOG_TIMEOUT_TITLE = getResId(context, "dialog_timeout_msg" + language, "string", R.string.dialog_timeout_msg);
-        RES_TIPS_DIALOG_TIMEOUT_RETRY = getResId(context, "dialog_timeout_btn_retry" + language, "string", R.string.dialog_timeout_btn_retry);
-        RES_TIPS_DIALOG_TIMEOUT_CANCEL = getResId(context, "dialog_timeout_btn_back" + language, "string", R.string.dialog_timeout_btn_back);
+        RES_TIPS_DEFAULT = getResId(context, R.string.detect_face_in, language);
+        RES_TIPS_FACE_AHEAD = getResId(context, R.string.detect_face_with_ahead, language);
+        RES_TIPS_DIALOG_TIMEOUT_TITLE = getResId(context, R.string.dialog_timeout_msg, language);
+        RES_TIPS_DIALOG_TIMEOUT_RETRY = getResId(context, R.string.dialog_timeout_btn_retry, language);
+        RES_TIPS_DIALOG_TIMEOUT_CANCEL = getResId(context, R.string.dialog_timeout_btn_back, language);
     }
 
 //    public static void setResNormal() {
