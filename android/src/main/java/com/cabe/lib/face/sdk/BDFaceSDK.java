@@ -2,7 +2,6 @@ package com.cabe.lib.face.sdk;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceEnvironment;
@@ -10,7 +9,6 @@ import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.listener.IInitCallback;
-import com.baidu.idl.face.platform.stat.NetUtil;
 import com.cabe.flutter.plugin.widget_face_sdk.R;
 import com.cabe.lib.face.sdk.manager.QualityConfigManager;
 import com.cabe.lib.face.sdk.model.QualityConfig;
@@ -18,15 +16,11 @@ import com.cabe.lib.face.sdk.model.QualityConfig;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 
 public class BDFaceSDK {
     public static int RES_TIPS_DEFAULT = R.string.detect_face_in;
@@ -37,7 +31,6 @@ public class BDFaceSDK {
     public static int RES_FACE_TIP_SIZE_TOP = 22;
     public static int RES_FACE_TIP_SIZE_SECOND = 16;
     private static final List<LivenessTypeEnum> livenessList = new ArrayList<>();
-    private static final String[] VERIFY_HOST_NAME_ARRAY = new String[]{};
     static {
         livenessList.add(LivenessTypeEnum.Eye);
         livenessList.add(LivenessTypeEnum.Mouth);
@@ -45,17 +38,6 @@ public class BDFaceSDK {
         livenessList.add(LivenessTypeEnum.HeadLeft);
         livenessList.add(LivenessTypeEnum.HeadUp);
         livenessList.add(LivenessTypeEnum.HeadDown);
-        try {
-            Field netVerify = NetUtil.class.getDeclaredField("DO_NOT_VERIFY");
-            BDFaceSDK.changeStaticFinal(netVerify, new HostnameVerifier() {
-                public boolean verify(String hostname, SSLSession session) {
-                    if(TextUtils.isEmpty(hostname)) return false;
-                    return !Arrays.asList(VERIFY_HOST_NAME_ARRAY).contains(hostname);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     public static void init(final Context context, Map<String, Object> params, final BDFaceSDKInitCallback callback) {
         int qualityLevel = 0;
