@@ -139,6 +139,7 @@ public class BDFaceSDK {
         // LivenessTypeEunm.HeadUp, LivenessTypeEunm.HeadDown, LivenessTypeEunm.HeadLeft,
         // LivenessTypeEunm.HeadRight
         config.setLivenessTypeList(livenessList);
+        config.setLivenessRandomCount(3);
         // 设置动作活体是否随机
         config.setLivenessRandom(true);
         // 设置开启提示音
