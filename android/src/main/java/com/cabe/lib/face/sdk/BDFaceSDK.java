@@ -15,9 +15,7 @@ import com.cabe.lib.face.sdk.model.QualityConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -30,14 +28,14 @@ public class BDFaceSDK {
     public static int RES_TIPS_DIALOG_TIMEOUT_CANCEL = R.string.dialog_timeout_btn_back;
     public static int RES_FACE_TIP_SIZE_TOP = 22;
     public static int RES_FACE_TIP_SIZE_SECOND = 16;
-    private static final List<LivenessTypeEnum> livenessList = new ArrayList<>();
     static {
-        livenessList.add(LivenessTypeEnum.Eye);
-        livenessList.add(LivenessTypeEnum.Mouth);
-        livenessList.add(LivenessTypeEnum.HeadRight);
-        livenessList.add(LivenessTypeEnum.HeadLeft);
-        livenessList.add(LivenessTypeEnum.HeadUp);
-        livenessList.add(LivenessTypeEnum.HeadDown);
+        FaceEnvironment.livenessTypeDefaultList.clear();
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.Eye);
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.Mouth);
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.HeadRight);
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.HeadLeft);
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.HeadUp);
+        FaceEnvironment.livenessTypeDefaultList.add(LivenessTypeEnum.HeadDown);
     }
     public static void init(final Context context, Map<String, Object> params, final BDFaceSDKInitCallback callback) {
         int qualityLevel = 0;
@@ -138,10 +136,11 @@ public class BDFaceSDK {
         // 设置活体动作，通过设置list，LivenessTypeEunm.Eye, LivenessTypeEunm.Mouth,
         // LivenessTypeEunm.HeadUp, LivenessTypeEunm.HeadDown, LivenessTypeEunm.HeadLeft,
         // LivenessTypeEunm.HeadRight
-        config.setLivenessTypeList(livenessList);
-        config.setLivenessRandomCount(3);
+        config.setLivenessTypeList(null);
         // 设置动作活体是否随机
         config.setLivenessRandom(true);
+        // 设置动作活体随机的数量
+        config.setLivenessRandomCount(FaceEnvironment.VALUE_LIVENESS_DEFAULT_RANDOM_COUNT);
         // 设置开启提示音
         config.setSound(isOpenSound);
         // 原图缩放系数
